@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover,
+	.navbar-default .navbar-nav>.open>a:focus {
+	background-color: #004276;
+}
+	      .ui-layout-north {
+                    z-index:20 !important;
+                    overflow:visible !important;;
+                }
+
+                .ui-layout-north .ui-layout-unit-content {
+                    overflow:visible !important;
+                }
+                
+                a.ui-menuitem-link.ui-corner-all.ui-state-hover{
+                color:red;
+                }
+                
+          .ui-layout-unit{
+                border:none;
+                }
+}
