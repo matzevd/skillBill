@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="/WEB-INF/tags/layout.xhtml">
+		<ui:define name="content">
+
+
+
+			<h:form id="form1" style="">
+				<p:growl id="messages" showDetail="true" />
+
+
+				<p:panel id="panel" header="Neue Ausschreibung hinzufügen">
+					<br />
+
+
+
+					<h:panelGrid id="display" columns="2" cellpadding="4">
+
+						<h:outputText value="Kurzbezeichnung" for="kurzbezeichnung"
+							style="padding-left: 30px; padding-right: 30px;" />
+
+						<p:inputText id="kurzbezeichnung"
+							value="#{ausschreibungView.ausschreibung.kurzbezeichnung}" required="true"
+							label="kurzbezeichnung" requiredMessage="Kurzbezeichnung bitte eingeben" style="width:173px"/>
+
+						<h:outputText value="Herausgeber" for="herausgeber"
+							style="padding-left: 30px; padding-right: 30px;" />
+
+						<p:inputText id="herausgeber"
+							value="#{ausschreibungView.ausschreibung.herausgeber}" required="true"
+							label="Herausgeber" requiredMessage="Herausgeber bitte eingeben" style="width:173px"/>
+							
+						<h:outputText value="Beschreibung" for="beschreibung"
+							style="padding-left: 30px; padding-right: 30px;" />
+
+						<p:inputText id="beschreibung"
+							value="#{ausschreibungView.ausschreibung.beschreibung}" required="true"
+							label="Beschreibung" requiredMessage="Beschreibung bitte eingeben" style="width:173px"/>
+
+
+						<h:outputText for="benoetigtePT" value="benötigte PT"
+							style="padding-left: 30px; padding-right: 30px; " />
+						<p:spinner id="benoetigtePT"
+							value="#{ausschreibungView.ausschreibung.benoetigtePT}" min="0" max="254"  />
+							
+							
+
+						<p:outputPanel layout="block" style="text-align:center">
+							<br />
+							<br />
+							<p:commandButton value="Reset" styleClass=""
+								update=":form1:panel" process="@this"
+								actionListener="#{ausschreibungView.reset}" />
+							<p:commandButton value="Speichern" styleClass=""
+								actionListener="#{ausschreibungView.save}"
+								update=":form1:messages, :form1:panel" />
+						</p:outputPanel>
+
+
+
+					</h:panelGrid>
+
+
+
+				</p:panel>
+
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
