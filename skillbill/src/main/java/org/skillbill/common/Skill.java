@@ -1,10 +1,15 @@
 package org.skillbill.common;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -29,6 +34,9 @@ public class Skill {
 	private String kurzbezeichnung;
 	private String beschreibung;
 	
+	/*@ManyToMany(mappedBy="skilllist")
+	private List<Mitarbeiter> mitarbeiterSkilllist = new ArrayList<Mitarbeiter>();*/
+	
 	public String getKurzbezeichnung() {
 		return kurzbezeichnung;
 	}
@@ -44,6 +52,7 @@ public class Skill {
 	public Long getId() {
 		return id;
 	}
+	
 
 	
 

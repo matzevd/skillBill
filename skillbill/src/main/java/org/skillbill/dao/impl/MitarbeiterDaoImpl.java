@@ -1,4 +1,4 @@
-package org.skillbill.dao.service;
+package org.skillbill.dao.impl;
 
 
 
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
-public class MitarbeiterService extends EntityService<Mitarbeiter> implements MitarbeiterDao {
+public class MitarbeiterDaoImpl extends EntityDaoImpl<Mitarbeiter> implements MitarbeiterDao {
 
 	
 }

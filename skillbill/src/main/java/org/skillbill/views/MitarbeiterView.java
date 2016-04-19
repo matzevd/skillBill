@@ -8,8 +8,6 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.apache.log4j.Level;
@@ -17,13 +15,15 @@ import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 import org.skillbill.common.Mitarbeiter;
+import org.skillbill.common.Skill;
+import org.skillbill.converter.SkillConverter;
 import org.skillbill.dao.MitarbeiterDao;
-import org.skillbill.dao.service.MitarbeiterService;
+import org.skillbill.dao.SkillDao;
 import org.skillbill.enums.GeschlechtEnum;
 import org.skillbill.enums.StandortEnum;
+import org.skillbill.service.MitarbeiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 
 
@@ -40,13 +40,24 @@ public class MitarbeiterView implements Serializable {
 	
 	
 	@Autowired
-	private  MitarbeiterDao mitarbeiterService;
+	private  MitarbeiterDao mitarbeiterDao;
+	
+	@Autowired
+	private MitarbeiterService mitarbeiterService;
+	
+	@Autowired
+	private SkillDao skillDao;
+	
+	private SkillConverter skillconverter;
 	
 
 	private Mitarbeiter mitarbeiter;
 	private Mitarbeiter mitarbeiterSelected;
 	private List<Mitarbeiter> list;	
 	private List<Mitarbeiter> listSelected;
+	
+	private List<Skill> listAllSkills;
+	private List<Skill> listSelectedSkills;
 
 	
 	@PostConstruct
@@ -62,11 +73,17 @@ public class MitarbeiterView implements Serializable {
 
 		this.list = new ArrayList<Mitarbeiter>();
 		this.listSelected = new ArrayList<Mitarbeiter>();
+		
+		this.listSelectedSkills = new ArrayList<Skill>();
+		this.listAllSkills = new ArrayList<Skill>();
 
 		
 		try {
-			this.list.addAll(mitarbeiterService.findAll());
+			this.list.addAll(mitarbeiterDao.findAll());
 			this.listSelected.addAll(this.list);
+			
+			this.listAllSkills.addAll(skillDao.findAll());
+			skillconverter = new SkillConverter(listAllSkills);		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -77,7 +94,7 @@ public class MitarbeiterView implements Serializable {
 	public void save() {
 		try {
 		    
-			mitarbeiterService.persist(this.mitarbeiter);
+			mitarbeiterService.speichernMitarbeiter(this.mitarbeiter, this.listSelectedSkills);
 			
 			notificationSuccess("Mitarbeiter " + this.mitarbeiter.getVorname()+ " " + this.mitarbeiter.getNachname() + " erfolgreich gespeichert!");
 			refreshList();
@@ -90,7 +107,7 @@ public class MitarbeiterView implements Serializable {
 
 	public void update() {
 		try {
-			mitarbeiterService.merge(this.mitarbeiterSelected);
+			mitarbeiterDao.merge(this.mitarbeiterSelected);
 			
 			notificationSuccess("Mitarbeiter " + this.mitarbeiterSelected.getVorname()+ " " + this.mitarbeiterSelected.getNachname() + " erfolgreich bearbeitet!");
 			refreshList();
@@ -101,7 +118,7 @@ public class MitarbeiterView implements Serializable {
 
 	public void delete() {
 		try {
-			mitarbeiterService.remove(this.mitarbeiterSelected.getId());
+			mitarbeiterDao.remove(this.mitarbeiterSelected.getId());
 		
 			notificationSuccess("Mitarbeiter " + this.mitarbeiterSelected.getVorname()+ " " + this.mitarbeiterSelected.getNachname() + " erfolgreich gelöscht!");
 			refreshList();
@@ -206,13 +223,67 @@ public class MitarbeiterView implements Serializable {
 
 
 	public MitarbeiterDao getMitarbeiterService() {
-		return mitarbeiterService;
+		return mitarbeiterDao;
 	}
 
 
 
-	public void setMitarbeiterService(MitarbeiterService mitarbeiterService) {
-		this.mitarbeiterService = mitarbeiterService;
+	public void setMitarbeiterService(MitarbeiterDao mitarbeiterService) {
+		this.mitarbeiterDao = mitarbeiterService;
+	}
+
+
+
+	public SkillDao getSkillDao() {
+		return skillDao;
+	}
+
+
+
+	public void setSkillDao(SkillDao skillDao) {
+		this.skillDao = skillDao;
+	}
+
+
+
+	public List<Skill> getListSelectedSkills() {
+		if (listSelectedSkills == null){
+			listSelectedSkills = new ArrayList<Skill>();
+		}
+		return listSelectedSkills;
+	}
+
+
+
+	public void setListSelectedSkills(List<Skill> listSelectedSkills) {
+		this.listSelectedSkills = listSelectedSkills;
+	}
+
+
+
+	public List<Skill> getListAllSkills() {
+		return listAllSkills;
+	}
+
+
+
+	public void setListAllSkills(List<Skill> listAllSkills) {
+		this.listAllSkills = listAllSkills;
+	}
+
+
+
+	public SkillConverter getSkillconverter() {
+		if (skillconverter == null){
+			skillconverter = new SkillConverter(new ArrayList<Skill>());
+		}
+		return skillconverter;
+	}
+
+
+
+	public void setSkillconverter(SkillConverter skillconverter) {
+		this.skillconverter = skillconverter;
 	}
 
 

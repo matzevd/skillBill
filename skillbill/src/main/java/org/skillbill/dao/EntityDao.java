@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 public interface EntityDao<E> {
 	
-	void persist(E e) throws Exception;
+	E persist(E e) throws Exception;
 	
 	void merge(E e) throws Exception;
 

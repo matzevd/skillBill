@@ -1,10 +1,18 @@
 package org.skillbill.common;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -37,6 +45,10 @@ public class Mitarbeiter {
 	private Long telefonnummer;
 	private StandortEnum standort;
 	private GeschlechtEnum geschlecht;
+	
+	/*@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="MITARBEITER_SKILL",joinColumns={@JoinColumn(name="Mitarbeiter_ID")},inverseJoinColumns={@JoinColumn(name="Skill_ID")})
+	private List<Skill> skilllist = new ArrayList<Skill>();*/
 	
 	public String getVorname() {
 		return vorname;
@@ -81,9 +93,7 @@ public class Mitarbeiter {
 	public void setFreipt(Integer freipt) {
 		this.freipt = freipt;
 	}
-	public Long getId() {
-		return id;
-	}
+	
 	public Long getTelefonnummer() {
 		return telefonnummer;
 	}
@@ -95,5 +105,9 @@ public class Mitarbeiter {
 	}
 	public void setStandort(StandortEnum standort) {
 		this.standort = standort;
+	}
+
+	public Long getId() {
+		return id;
 	}
 }

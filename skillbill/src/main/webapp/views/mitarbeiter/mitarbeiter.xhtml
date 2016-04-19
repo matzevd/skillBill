@@ -28,21 +28,24 @@
 
 						<p:inputText id="vorname"
 							value="#{mitarbeiterView.mitarbeiter.vorname}" required="true"
-							label="Vorname" requiredMessage="Vornamen bitte eingeben" style="width:173px"/>
+							label="Vorname" requiredMessage="Vornamen bitte eingeben"
+							style="width:173px" />
 
 						<h:outputText value="Nachname" for="nachname"
 							style="padding-left: 30px; padding-right: 30px;" />
 
 						<p:inputText id="nachname"
 							value="#{mitarbeiterView.mitarbeiter.nachname}" required="true"
-							label="Nachname" requiredMessage="Nachname bitte eingeben" style="width:173px"/>
-							
-							<h:outputText value="Geburtstag" for="geb"
+							label="Nachname" requiredMessage="Nachname bitte eingeben"
+							style="width:173px" />
+
+						<h:outputText value="Geburtstag" for="geb"
 							style="padding-left: 30px; padding-right: 30px;" />
 
 						<p:calendar id="geb"
-							value="#{mitarbeiterView.mitarbeiter.geburtsdatum}" required="true"
-							label="Geburtstag" requiredMessage="Geburtstag bitte eingeben" style="width:173px"/>
+							value="#{mitarbeiterView.mitarbeiter.geburtsdatum}"
+							required="true" label="Geburtstag"
+							requiredMessage="Geburtstag bitte eingeben" style="width:173px" />
 
 						<h:outputText value="Personalnummer" for="personr"
 							style="padding-left: 30px; padding-right: 30px;" />
@@ -50,7 +53,8 @@
 						<p:inputText id="personr"
 							value="#{mitarbeiterView.mitarbeiter.personalnummer}"
 							required="true" label="Personalnummer"
-							requiredMessage="Personalnummer bitte eingeben" style="width:173px"/>
+							requiredMessage="Personalnummer bitte eingeben"
+							style="width:173px" />
 
 
 						<h:outputText value="Email" for="email"
@@ -58,7 +62,8 @@
 
 						<p:inputText id="email"
 							value="#{mitarbeiterView.mitarbeiter.email}" required="true"
-							label="Email" requiredMessage="E-Mail bitte angeben" style="width:173px"/>
+							label="Email" requiredMessage="E-Mail bitte angeben"
+							style="width:173px" />
 
 
 						<h:outputText value="Standort" for="standort"
@@ -88,15 +93,39 @@
 						<h:outputText for="freiept" value="Freie PT"
 							style="padding-left: 30px; padding-right: 30px; " />
 						<p:spinner id="freiept"
-							value="#{mitarbeiterView.mitarbeiter.freipt}" min="0" max="254"  />
-							
-							<h:outputText value="Telefonnummer" for="telefon"
+							value="#{mitarbeiterView.mitarbeiter.freipt}" min="0" max="254" />
+
+						<h:outputText value="Telefonnummer" for="telefon"
 							style="padding-left: 30px; padding-right: 30px;" />
 
 						<p:inputText id="telefon"
 							value="#{mitarbeiterView.mitarbeiter.telefonnummer}"
 							required="true" label="Telefonnummer"
-							requiredMessage="Telefonnummer bitte eingeben" style="width:173px"/>
+							requiredMessage="Telefonnummer bitte eingeben"
+							style="width:173px" />
+
+						<h:panelGrid columns="4" cellpadding="10">
+							<h:outputLabel for="menu" value="Fähigkeiten:" />
+							<p:selectCheckboxMenu id="menu"
+								value="#{mitarbeiterView.listSelectedSkills}" label="Skills"
+								filter="true" filterMatchMode="startsWith"
+								panelStyle="width:250px" converter="#{mitarbeiterView.skillconverter}">
+								<f:selectItems value="#{mitarbeiterView.listAllSkills}" itemLabel="#{sk.kurzbezeichnung}" itemValue="#{skill}" var="sk"/>
+							</p:selectCheckboxMenu>
+							<p:commandLink value="Submit" update="form1:skills" />
+
+
+							<p:outputPanel id="skills"
+								style="width:250px;padding-left:5px;margin-top:10px">
+								<p:dataList value="#{mitarbeiterView.listSelectedSkills}"
+									var="skills" emptyMessage="Keine Skills hinzufügen">
+            				#{skills}
+       					 </p:dataList>
+							</p:outputPanel>
+						</h:panelGrid>
+						</h:panelGrid>
+						
+						<h:panelGrid>
 
 						<p:outputPanel layout="block" style="text-align:center">
 							<br />
@@ -108,6 +137,7 @@
 								actionListener="#{mitarbeiterView.save}"
 								update=":form1:messages, :form1:panel" />
 						</p:outputPanel>
+
 
 
 

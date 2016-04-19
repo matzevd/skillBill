@@ -1,4 +1,4 @@
-package org.skillbill.dao.service;
+package org.skillbill.dao.impl;
 
 
 import org.skillbill.common.Ausschreibung;
@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
-public class AusschreibungService extends EntityService<Ausschreibung> implements AusschreibungDao {
+public class AusschreibungDaoImpl extends EntityDaoImpl<Ausschreibung> implements AusschreibungDao {
 
 	
 }

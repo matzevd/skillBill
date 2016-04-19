@@ -1,4 +1,4 @@
-package org.skillbill.dao.service;
+package org.skillbill.dao.impl;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -16,7 +16,7 @@ import org.skillbill.dao.EntityDao;
 import org.springframework.transaction.annotation.Transactional;
 
 
-public class EntityService<E>  implements EntityDao<E> {
+public class EntityDaoImpl<E>  implements EntityDao<E> {
 
 	
 
@@ -28,8 +28,9 @@ public class EntityService<E>  implements EntityDao<E> {
 	
 	
 	@Transactional
-	public void persist(E e) throws HibernateException{     
+	public E persist(E e) throws HibernateException{     
 	    getEntityManager().persist(e);
+	    return e;
 	}
 	@Transactional
 	public void merge(E e) throws HibernateException{     

@@ -1,4 +1,4 @@
-package org.skillbill.dao.service;
+package org.skillbill.dao.impl;
 
 
 import org.skillbill.common.Skill;
@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
-public class SkillService extends EntityService<Skill> implements SkillDao {
+public class SkillDaoImpl extends EntityDaoImpl<Skill> implements SkillDao {
 
 	
 }
