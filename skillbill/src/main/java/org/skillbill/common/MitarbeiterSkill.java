@@ -10,7 +10,7 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name="mitarbeiterskill.findAll", query="select ms from Mitarbeiterskill ms"),
+    @NamedQuery(name="mitarbeiterskill.findAll", query="select ms from MitarbeiterSkill ms"),
 }) 
 public class MitarbeiterSkill {
 	

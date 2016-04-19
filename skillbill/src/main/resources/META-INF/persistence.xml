@@ -9,6 +9,8 @@
         <class>org.skillbill.common.Skill</class>
         <class>org.skillbill.common.Mitarbeiter</class>
         <class>org.skillbill.common.Ausschreibung</class>
+                <class>org.skillbill.common.MitarbeiterSkill</class>
+        
         
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 

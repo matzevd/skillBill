@@ -118,8 +118,8 @@
 							<p:outputPanel id="skills"
 								style="width:250px;padding-left:5px;margin-top:10px">
 								<p:dataList value="#{mitarbeiterView.listSelectedSkills}"
-									var="skills" emptyMessage="Keine Skills hinzufügen">
-            				#{skills}
+									var="skills" emptyMessage="Keine Skills hinzufügt">
+            				#{skills.kurzbezeichnung}
        					 </p:dataList>
 							</p:outputPanel>
 						</h:panelGrid>

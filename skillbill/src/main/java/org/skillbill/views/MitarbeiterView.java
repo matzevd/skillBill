@@ -153,6 +153,18 @@ public class MitarbeiterView implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, msg);  
 	}
 	
+	public void ermittleSkillsZuMitarbeiter(){
+		try {
+			listSelectedSkills = mitarbeiterService.sucheSkillsZuMitarbeiter(mitarbeiterSelected.getId());
+		} catch (Exception e) {
+			Logger.getLogger(this.getClass().getName()).log(Level.ERROR, "Operation ermittleSkillsZuMitarbeiter Error ",e);
+			FacesMessage msg = null;  
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fehlermeldung", "Es ist ein Fehler aufgetreten: " + e.getMessage() + "; ErmittleSkillsZuMitarbeiter");  
+			FacesContext.getCurrentInstance().addMessage(null, msg);  
+
+		}
+	}
+	
 	
 
 

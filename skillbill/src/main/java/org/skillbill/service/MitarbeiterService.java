@@ -1,5 +1,6 @@
 package org.skillbill.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -11,6 +12,7 @@ import org.skillbill.common.MitarbeiterSkill;
 import org.skillbill.common.Skill;
 import org.skillbill.dao.MitarbeiterDao;
 import org.skillbill.dao.MitarbeiterSkillDao;
+import org.skillbill.dao.SkillDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class MitarbeiterService {
 	
 	@Autowired
 	private MitarbeiterSkillDao mitarbeiterskilldao;
+	
+	@Autowired
+	private SkillDao skilldao;
 	
 	
 	@Transactional
@@ -61,6 +66,25 @@ public class MitarbeiterService {
 
 	public void setMitarbeiterskilldao(MitarbeiterSkillDao mitarbeiterskilldao) {
 		this.mitarbeiterskilldao = mitarbeiterskilldao;
+	}
+
+
+	public List<Skill> sucheSkillsZuMitarbeiter(Long mitarbeiterid) throws Exception {
+		List<Skill>	skillsVonMitarbeiter = new ArrayList<Skill>(); 
+		List<MitarbeiterSkill> findall = mitarbeiterskilldao.findAll();
+		for (MitarbeiterSkill mitarbeiterSkill : findall) {
+			System.out.println("mitarbeiterskill mitarbeiterid = "+ mitarbeiterSkill.getMitarbeiterid() + " skillid = " + mitarbeiterSkill.getSkillid());
+		}
+		System.out.println("übergebene Mitarbeiter id = " + mitarbeiterid);
+		List<MitarbeiterSkill> listMitarbeiterSkillsvonMitarbeiter = mitarbeiterskilldao.findByMitarbeiterId(mitarbeiterid);
+		
+		
+		for (MitarbeiterSkill mitarbeiterSkill : listMitarbeiterSkillsvonMitarbeiter) {
+			skillsVonMitarbeiter.add(skilldao.findById(mitarbeiterSkill.getSkillid()));
+		}
+		
+		
+		return skillsVonMitarbeiter;
 	}
 	
 	
