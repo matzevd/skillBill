@@ -50,6 +50,16 @@
 						<p:spinner id="benoetigtePT"
 							value="#{ausschreibungView.ausschreibung.benoetigtePT}" min="0" max="254"  />
 							
+							<h:panelGrid columns="4" cellpadding="10">
+							<h:outputLabel for="menu" value="Benötigte Fähigkeiten" />
+							<p:selectCheckboxMenu id="menu"
+								value="#{ausschreibungView.listSelectedSkills}" label="Skills"
+								filter="true" filterMatchMode="startsWith"
+								panelStyle="width:250px" converter="#{ausschreibungView.skillconverter}">
+								<f:selectItems value="#{ausschreibungView.listAllSkills}" itemLabel="#{sk.kurzbezeichnung}" itemValue="#{skill}" var="sk"/>
+							</p:selectCheckboxMenu>
+							</h:panelGrid>
+							
 							
 
 						<p:outputPanel layout="block" style="text-align:center">

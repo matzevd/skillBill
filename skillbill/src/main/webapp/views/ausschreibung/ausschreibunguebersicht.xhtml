@@ -62,7 +62,8 @@ Ausschreibungübersicht    </f:facet>
 					<p:column headerText="Details" style="width:8%">
 						<p:commandLink update=":form1:display"
 							oncomplete="PF('detailsDlg').show()"
-							image="ui-icon ui-icon-search" title="Details">
+							image="ui-icon ui-icon-search" title="Details" 
+							action="#{ausschreibungView.ermittleSkillsZuAusschreibung()}">
 							<f:setPropertyActionListener value="#{object}"
 								target="#{ausschreibungView.ausschreibungSelected}" />
 							<h:outputText styleClass="ui-icon ui-icon-search" />
@@ -123,7 +124,13 @@ Ausschreibungübersicht    </f:facet>
 						<p:inputText
 							value="#{ausschreibungView.ausschreibungSelected.beschreibung}" />
 					
-
+	<p:outputPanel id="skills"
+							style="width:250px;padding-left:5px;margin-top:10px">
+							<p:dataList value="#{ausschreibungView.listSelectedSkills}"
+								var="skills" emptyMessage="Keine Skills gefunden">
+            				#{skills.kurzbezeichnung}
+       					 </p:dataList>
+       					 </p:outputPanel>
 
 					</h:panelGrid>
 

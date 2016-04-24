@@ -1,0 +1,14 @@
+package org.skillbill.dao;
+
+import java.util.List;
+
+import org.skillbill.common.AusschreibungSkill;
+
+
+
+public interface AusschreibungSkillDao extends EntityDao<AusschreibungSkill> {
+	
+	public List<AusschreibungSkill> findByAusschreibungID(final long ausschreibungID);
+	
+	
+}

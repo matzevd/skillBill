@@ -2,7 +2,6 @@ package org.skillbill.dao;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 
 
 public interface EntityDao<E> {

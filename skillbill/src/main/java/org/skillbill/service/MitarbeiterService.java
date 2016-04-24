@@ -71,11 +71,7 @@ public class MitarbeiterService {
 
 	public List<Skill> sucheSkillsZuMitarbeiter(Long mitarbeiterid) throws Exception {
 		List<Skill>	skillsVonMitarbeiter = new ArrayList<Skill>(); 
-		List<MitarbeiterSkill> findall = mitarbeiterskilldao.findAll();
-		for (MitarbeiterSkill mitarbeiterSkill : findall) {
-			System.out.println("mitarbeiterskill mitarbeiterid = "+ mitarbeiterSkill.getMitarbeiterid() + " skillid = " + mitarbeiterSkill.getSkillid());
-		}
-		System.out.println("übergebene Mitarbeiter id = " + mitarbeiterid);
+		
 		List<MitarbeiterSkill> listMitarbeiterSkillsvonMitarbeiter = mitarbeiterskilldao.findByMitarbeiterId(mitarbeiterid);
 		
 		

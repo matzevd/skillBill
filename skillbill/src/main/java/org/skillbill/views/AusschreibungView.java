@@ -15,7 +15,11 @@ import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 import org.skillbill.common.Ausschreibung;
+import org.skillbill.common.Skill;
+import org.skillbill.converter.SkillConverter;
 import org.skillbill.dao.AusschreibungDao;
+import org.skillbill.dao.SkillDao;
+import org.skillbill.service.AusschreibungService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,11 +40,22 @@ public class AusschreibungView implements Serializable {
 	@Autowired
 	private transient AusschreibungDao ausschreibungDao;
 	
+	@Autowired
+	private AusschreibungService ausschreibungService;
+	
+	@Autowired
+	private SkillDao skillDao;
+	
+	private SkillConverter skillconverter;
+	
 
 	private Ausschreibung ausschreibung;
 	private Ausschreibung ausschreibungSelected;
 	private List<Ausschreibung> list;	
 	private List<Ausschreibung> listSelected;
+	
+	private List<Skill> listAllSkills;
+	private List<Skill> listSelectedSkills;
 
 	
 	@PostConstruct
@@ -56,11 +71,17 @@ public class AusschreibungView implements Serializable {
 
 		this.list = new ArrayList<Ausschreibung>();
 		this.listSelected = new ArrayList<Ausschreibung>();
+		
+		this.listSelectedSkills = new ArrayList<Skill>();
+		this.listAllSkills = new ArrayList<Skill>();
 
 		
 		try {
 			this.list.addAll(ausschreibungDao.findAll());
 			this.listSelected.addAll(this.list);
+			
+			this.listAllSkills.addAll(skillDao.findAll());
+			skillconverter = new SkillConverter(listAllSkills);		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,7 +92,7 @@ public class AusschreibungView implements Serializable {
 	public void save() {
 		try {
 		    
-			ausschreibungDao.persist(this.ausschreibung);
+			ausschreibungService.speichernAusschreibung(ausschreibung, listSelectedSkills);
 			
 			notificationSuccess("Ausschreibung (Nummer:" + this.ausschreibung.getId()+ ") " + this.ausschreibung.getKurzbezeichnung() + " erfolgreich gespeichert!");
 			refreshList();
@@ -128,6 +149,18 @@ public class AusschreibungView implements Serializable {
 		FacesMessage msg = null;  
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fehlermeldung", "Es ist ein Fehler aufgetreten: " + e.getMessage() + "; " + operation);  
 		FacesContext.getCurrentInstance().addMessage(null, msg);  
+	}
+	
+	public void ermittleSkillsZuAusschreibung(){
+		try {
+			listSelectedSkills = ausschreibungService.sucheSkillsZuAusschreibung(ausschreibungSelected.getId());
+		} catch (Exception e) {
+			Logger.getLogger(this.getClass().getName()).log(Level.ERROR, "Operation ermittleSkillsZuAusschreibung Error ",e);
+			FacesMessage msg = null;  
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fehlermeldung", "Es ist ein Fehler aufgetreten: " + e.getMessage() + "; ermittleSkillsZuAusschreibung");  
+			FacesContext.getCurrentInstance().addMessage(null, msg);  
+
+		}
 	}
 	
 	
@@ -193,6 +226,42 @@ public class AusschreibungView implements Serializable {
 	}
 
 
+
+	public List<Skill> getListAllSkills() {
+		return listAllSkills;
+	}
+
+
+
+	public void setListAllSkills(List<Skill> listAllSkills) {
+		this.listAllSkills = listAllSkills;
+	}
+
+
+
+	public List<Skill> getListSelectedSkills() {
+		return listSelectedSkills;
+	}
+
+
+
+	public void setListSelectedSkills(List<Skill> listSelectedSkills) {
+		this.listSelectedSkills = listSelectedSkills;
+	}
+
+
+	public SkillConverter getSkillconverter() {
+		if (skillconverter == null){
+			skillconverter = new SkillConverter(new ArrayList<Skill>());
+		}
+		return skillconverter;
+	}
+
+
+
+	public void setSkillconverter(SkillConverter skillconverter) {
+		this.skillconverter = skillconverter;
+	}
 
 
 
