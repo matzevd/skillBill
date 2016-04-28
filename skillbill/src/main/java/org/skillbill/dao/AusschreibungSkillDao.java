@@ -10,5 +10,8 @@ public interface AusschreibungSkillDao extends EntityDao<AusschreibungSkill> {
 	
 	public List<AusschreibungSkill> findByAusschreibungID(final long ausschreibungID);
 	
+	public List<AusschreibungSkill> findBySkillID(final long skillId);
+
+	
 	
 }

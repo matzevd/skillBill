@@ -29,5 +29,18 @@ public class AusschreibungSkillDaoImpl extends EntityDaoImpl<AusschreibungSkill>
 	}
 
 	
+	@SuppressWarnings("unchecked")
+	public List<AusschreibungSkill> findBySkillID(long skillId) {
+		try {
+			final String queryString = "select ask from  AusschreibungSkill ask where ask.skillid = :value ";
+			Query query = getEntityManager().createQuery(queryString);
+			query.setParameter("value", skillId);
+			return query.getResultList();
+			
+		} catch (RuntimeException e){
+			throw e;
+		}	}
+
+	
 }
 

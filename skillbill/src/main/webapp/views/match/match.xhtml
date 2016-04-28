@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="/WEB-INF/tags/layout.xhtml">
+		<ui:define name="content">
+
+			<h:form id="formSuche">
+				<p:growl id="msgs" showDetail="true" />
+				<p:panelGrid columns="3">
+					<p:fieldset legend="Suchobjekt" style="margin-bottom:20px">
+						<h:panelGrid columns="5">
+							<p:outputLabel for="suchobjekt" value="Suchobjekt:" />
+							<p:selectOneRadio id="suchobjekt" value="#{matchView.suchobjekt}">
+								<f:selectItem itemLabel="Skill" itemValue="Skill" />
+								<f:selectItem itemLabel="Mitarbeiter" itemValue="Mitarbeiter" />
+								<f:selectItem itemLabel="Ausschreibung"
+									itemValue="Ausschreibung" />
+								<p:ajax event="change" update="formSuche" />
+							</p:selectOneRadio>
+						</h:panelGrid>
+					</p:fieldset>
+
+					<p:fieldset legend="Suchkriterien - Skill" id="fieldsetSkill"
+						rendered="#{matchView.suchobjekt == 'Skill'}">
+						<h:panelGrid>
+							<p:outputLabel for="skkurz" value="Skill-Kurzbezeichnung:" />
+							<p:inputText id="skkurz" value="#{matchView.skillname}"></p:inputText>
+						</h:panelGrid>
+					</p:fieldset>
+
+					<p:fieldset legend="Suchkriterien - Mitarbeiter"
+						id="fieldsetMitarbeiter"
+						rendered="#{matchView.suchobjekt == 'Mitarbeiter'}">
+						<h:panelGrid columns="6">
+							<p:outputLabel for="vorname" value="Vorname" />
+							<p:inputText id="vorname"></p:inputText>
+							<p:outputLabel for="nachname" value="Nachname" />
+							<p:inputText id="nachname"></p:inputText>
+							<p:outputLabel for="personalnummer" value="Personalnummer" />
+							<p:inputText id="personalnummer"></p:inputText>
+						</h:panelGrid>
+					</p:fieldset>
+
+					<p:fieldset legend="Suchkriterien - Ausschreibung"
+						id="fieldsetAusschreibung"
+						rendered="#{matchView.suchobjekt == 'Ausschreibung'}">
+						<h:panelGrid columns="6">
+							<p:outputLabel for="projektid" value="(Projekt-)ID" />
+							<p:inputText id="projektid"></p:inputText>
+							<p:outputLabel for="kurzbezeichnung" value="Kurzbezeichnung" />
+							<p:inputText id="kurzbezeichnung"></p:inputText>
+							<p:outputLabel for="herausgeber" value="Herausgeber" />
+							<p:inputText id="herausgeber"></p:inputText>
+						</h:panelGrid>
+					</p:fieldset>
+
+
+					<p:commandButton value="Suchen" id="suche" icon="ui-icon-search"
+						action="#{matchView.sucheStarten}" />
+
+
+				</p:panelGrid>
+
+
+
+
+			</h:form>
+
+			<h:form id="datenZuSkillsuche">
+				<p:dataTable id="tblskill" var="zuskill"
+					value="#{matchView.listeGefundenerAuschreibungenZuSkill}"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+					paginator="true" rows="10" style="margin-bottom:20px">
+
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Id" />
+						</f:facet>
+						<h:outputText value="#{zuskill.id}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Kurzbezeichnung" />
+						</f:facet>
+						<h:outputText value="#{zuskill.kurzbezeichnung}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Beschreibung" />
+						</f:facet>
+						<h:outputText value="#{zuskill.beschreibung}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Herausgeber" />
+						</f:facet>
+						<h:outputText value="#{zuskill.herausgeber}" />
+					</p:column>
+				</p:dataTable>
+
+				<h:commandLink id="pdf">
+					<p:graphicImage name="/demo/images/pdf.png" />
+					<p:dataExporter type="pdf" target="tbl" fileName="cars"
+						preProcessor="#{matchView.preProcessPDF}" />
+				</h:commandLink>
+
+
+
+
+
+
+
+
+
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

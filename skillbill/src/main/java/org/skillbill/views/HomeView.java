@@ -23,7 +23,6 @@ import org.primefaces.model.tagcloud.TagCloudItem;
 
 @Component(value="homeView")
 @Scope(value="session")
-@ManagedBean
 public class HomeView implements Serializable{
 
 	/**
