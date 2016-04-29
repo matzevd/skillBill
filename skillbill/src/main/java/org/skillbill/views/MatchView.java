@@ -118,5 +118,28 @@ public class MatchView {
 	            cell.setCellStyle(cellStyle);
 	        }
 	    }
+	  
+	  public String baueFilename(){
+		  String filename = null;
+			switch (suchobjekt) {
+			case "Skill":
+				filename = "MatchZuSkill_" +skillname;
+				break;
+
+			case "Ausschreibung":
+
+				break;
+
+			case "Mitareiter":
+
+				break;
+
+			default:
+				filename = "MatchOhneFilterung";
+				break;
+
+			}
+			return filename;
+	  }
 
 }

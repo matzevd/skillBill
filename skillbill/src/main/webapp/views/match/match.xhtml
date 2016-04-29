@@ -62,7 +62,7 @@
 
 
 					<p:commandButton value="Suchen" id="suche" icon="ui-icon-search"
-						action="#{matchView.sucheStarten}" />
+						action="#{matchView.sucheStarten}" update="tblskill"/>
 
 
 				</p:panelGrid>
@@ -70,9 +70,7 @@
 
 
 
-			</h:form>
-
-			<h:form id="datenZuSkillsuche">
+		
 				<p:dataTable id="tblskill" var="zuskill"
 					value="#{matchView.listeGefundenerAuschreibungenZuSkill}"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
@@ -115,7 +113,7 @@
 				<!-- 				</h:commandLink> -->
 				<h:commandLink id="excel">
 					<p:graphicImage value="/resources/images/exceldownload.png" style="height:35px"/>
-					<p:dataExporter type="xls" target="tblskill" fileName="match"
+					<p:dataExporter type="xls" target="tblskill" fileName="#{matchView.baueFilename()}"
 						postProcessor="#{matchView.postProcessXLS}" />
 				</h:commandLink>
 
