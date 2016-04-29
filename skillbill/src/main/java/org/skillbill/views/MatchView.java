@@ -1,26 +1,26 @@
 package org.skillbill.views;
 
-import java.io.File;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
+
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.skillbill.common.Ausschreibung;
 import org.skillbill.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
+
 
 
 @Component(value = "matchView")
@@ -101,15 +101,22 @@ public class MatchView {
 		this.matchService = matchService;
 	}
 	
-	public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
-        Document pdf = (Document) document;
-        pdf.open();
-        pdf.setPageSize(PageSize.A4);
- 
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        String logo = externalContext.getRealPath("") + File.separator + "resources" + File.separator + "demo" + File.separator + "images" + File.separator + "prime_logo.png";
-         
-        pdf.add(Image.getInstance(logo));
-    }
+
+	
+	  public void postProcessXLS(Object document) {
+	        HSSFWorkbook wb = (HSSFWorkbook) document;
+	        HSSFSheet sheet = wb.getSheetAt(0);
+	        HSSFRow header = sheet.getRow(0);
+	         
+	        HSSFCellStyle cellStyle = wb.createCellStyle();  
+	        cellStyle.setFillForegroundColor(HSSFColor.GREEN.index);
+	        cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+	         
+	        for(int i=0; i < header.getPhysicalNumberOfCells();i++) {
+	            HSSFCell cell = header.getCell(i);
+	             
+	            cell.setCellStyle(cellStyle);
+	        }
+	    }
 
 }

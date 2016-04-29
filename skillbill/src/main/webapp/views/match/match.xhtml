@@ -108,17 +108,16 @@
 					</p:column>
 				</p:dataTable>
 
-				<h:commandLink id="pdf">
-					<p:graphicImage name="/demo/images/pdf.png" />
-					<p:dataExporter type="pdf" target="tbl" fileName="cars"
-						preProcessor="#{matchView.preProcessPDF}" />
+				<!-- 				<h:commandLink id="pdf"> -->
+				<!-- 					<p:graphicImage value="/resources/images/adobe.png" /> -->
+				<!-- 					<p:dataExporter type="pdf" target="tblskill" fileName="test" -->
+				<!-- 						preProcessor="#{matchView.preProcessPDF}" /> -->
+				<!-- 				</h:commandLink> -->
+				<h:commandLink id="excel">
+					<p:graphicImage value="/resources/images/exceldownload.png" style="height:35px"/>
+					<p:dataExporter type="xls" target="tblskill" fileName="match"
+						postProcessor="#{matchView.postProcessXLS}" />
 				</h:commandLink>
-
-
-
-
-
-
 
 
 
