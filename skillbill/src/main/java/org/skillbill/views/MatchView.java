@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.faces.bean.ViewScoped;
 
-
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -16,6 +15,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.skillbill.common.Ausschreibung;
+import org.skillbill.common.Mitarbeiter;
 import org.skillbill.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,18 +29,24 @@ public class MatchView {
 
 	private String suchobjekt = null;
 	private String skillname = null;
+	private  boolean wurdeGesucht = false;
 
 	private List<Ausschreibung> listeGefundenerAuschreibungenZuSkill;
+	private List<Mitarbeiter> listeGefundenerMitarbeiterZuSkill;
+
 
 	@Autowired
 	private MatchService matchService;
 
 	public void sucheStarten() {
+		wurdeGesucht = true;
 
 		switch (suchobjekt) {
 		case "Skill":
 			listeGefundenerAuschreibungenZuSkill = matchService
 					.sucheAusschreibungMatchesZuSkill(skillname);
+			
+			listeGefundenerMitarbeiterZuSkill = matchService.sucheMitarbeiterMatchesZuSkill(skillname);
 			break;
 
 		case "Ausschreibung":
@@ -65,41 +71,7 @@ public class MatchView {
 
 	}
 
-	public String getSuchobjekt() {
-		return suchobjekt;
-	}
 
-	public void setSuchobjekt(String suchobjekt) {
-		this.suchobjekt = suchobjekt;
-	}
-
-	public String getSkillname() {
-		return skillname;
-	}
-
-	public void setSkillname(String skillname) {
-		this.skillname = skillname;
-	}
-
-	public List<Ausschreibung> getListeGefundenerAuschreibungenZuSkill() {
-		if (listeGefundenerAuschreibungenZuSkill == null) {
-			listeGefundenerAuschreibungenZuSkill = new ArrayList<Ausschreibung>();
-		}
-		return listeGefundenerAuschreibungenZuSkill;
-	}
-
-	public void setListeGefundenerAuschreibungenZuSkill(
-			List<Ausschreibung> listeGefundenerAuschreibungenZuSkill) {
-		this.listeGefundenerAuschreibungenZuSkill = listeGefundenerAuschreibungenZuSkill;
-	}
-
-	public MatchService getMatchService() {
-		return matchService;
-	}
-
-	public void setMatchService(MatchService matchService) {
-		this.matchService = matchService;
-	}
 	
 
 	
@@ -141,5 +113,63 @@ public class MatchView {
 			}
 			return filename;
 	  }
+
+	  
+	//-------------------------------------------GETTER und SETTER - MEthoden ------------------------------------------------
+	public boolean isWurdeGesucht() {
+		return wurdeGesucht;
+	}
+
+	public void setWurdeGesucht(boolean wurdeGesucht) {
+		this.wurdeGesucht = wurdeGesucht;
+	}
+
+	public List<Mitarbeiter> getListeGefundenerMitarbeiterZuSkill() {
+		if (listeGefundenerMitarbeiterZuSkill == null) {
+			listeGefundenerMitarbeiterZuSkill = new ArrayList<Mitarbeiter>();
+		}
+		return listeGefundenerMitarbeiterZuSkill;
+	}
+
+	public void setListeGefundenerMitarbeiterZuSkill(
+			List<Mitarbeiter> listeGefundenerMitarbeiterZuSkill) {
+		this.listeGefundenerMitarbeiterZuSkill = listeGefundenerMitarbeiterZuSkill;
+	}
+	
+	public String getSuchobjekt() {
+		return suchobjekt;
+	}
+
+	public void setSuchobjekt(String suchobjekt) {
+		this.suchobjekt = suchobjekt;
+	}
+
+	public String getSkillname() {
+		return skillname;
+	}
+
+	public void setSkillname(String skillname) {
+		this.skillname = skillname;
+	}
+
+	public List<Ausschreibung> getListeGefundenerAuschreibungenZuSkill() {
+		if (listeGefundenerAuschreibungenZuSkill == null) {
+			listeGefundenerAuschreibungenZuSkill = new ArrayList<Ausschreibung>();
+		}
+		return listeGefundenerAuschreibungenZuSkill;
+	}
+
+	public void setListeGefundenerAuschreibungenZuSkill(
+			List<Ausschreibung> listeGefundenerAuschreibungenZuSkill) {
+		this.listeGefundenerAuschreibungenZuSkill = listeGefundenerAuschreibungenZuSkill;
+	}
+
+	public MatchService getMatchService() {
+		return matchService;
+	}
+
+	public void setMatchService(MatchService matchService) {
+		this.matchService = matchService;
+	}
 
 }

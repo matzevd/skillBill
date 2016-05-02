@@ -6,7 +6,6 @@ import java.util.List;
 
 import javassist.bytecode.SignatureAttribute.TypeVariable;
 
-import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;

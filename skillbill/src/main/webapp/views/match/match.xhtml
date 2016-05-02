@@ -62,20 +62,23 @@
 
 
 					<p:commandButton value="Suchen" id="suche" icon="ui-icon-search"
-						action="#{matchView.sucheStarten}" update="tblskill"/>
+						action="#{matchView.sucheStarten}" update="@all" />
 
 
 				</p:panelGrid>
+				<p:separator></p:separator>
 
 
 
 
-		
 				<p:dataTable id="tblskill" var="zuskill"
 					value="#{matchView.listeGefundenerAuschreibungenZuSkill}"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-					paginator="true" rows="10" style="margin-bottom:20px">
-
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10" style="margin-bottom:20px"
+					rendered="#{matchView.wurdeGesucht and matchView.suchobjekt == 'Skill'}">
+					<f:facet name="header">
+					Passende Ausschreibungen zum Suchfilter    
+					</f:facet>
 
 					<p:column>
 						<f:facet name="header">
@@ -105,17 +108,54 @@
 						<h:outputText value="#{zuskill.herausgeber}" />
 					</p:column>
 				</p:dataTable>
+				
+					<p:dataTable id="tblskillMIT" var="zuskill"
+					value="#{matchView.listeGefundenerMitarbeiterZuSkill}"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10" style="margin-bottom:20px"
+					rendered="#{matchView.wurdeGesucht and matchView.suchobjekt == 'Skill'}">
+					<f:facet name="header">
+					Passende Mitarbeiter zum Suchfilter    
+					</f:facet>
 
-				<!-- 				<h:commandLink id="pdf"> -->
-				<!-- 					<p:graphicImage value="/resources/images/adobe.png" /> -->
-				<!-- 					<p:dataExporter type="pdf" target="tblskill" fileName="test" -->
-				<!-- 						preProcessor="#{matchView.preProcessPDF}" /> -->
-				<!-- 				</h:commandLink> -->
-				<h:commandLink id="excel">
-					<p:graphicImage value="/resources/images/exceldownload.png" style="height:35px"/>
-					<p:dataExporter type="xls" target="tblskill" fileName="#{matchView.baueFilename()}"
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Id" />
+						</f:facet>
+						<h:outputText value="#{zuskill.id}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Vorname" />
+						</f:facet>
+						<h:outputText value="#{zuskill.vorname}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Nachname" />
+						</f:facet>
+						<h:outputText value="#{zuskill.nachname}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Personalnummer" />
+						</f:facet>
+						<h:outputText value="#{zuskill.personalnummer}" />
+					</p:column>
+				</p:dataTable>
+
+				<h:commandLink id="excel" rendered="#{matchView.wurdeGesucht}">
+					<p:graphicImage value="/resources/images/exceldownload.png"
+						style="height:35px" />
+					<p:dataExporter type="xls" target="tblskill"
+						fileName="#{matchView.baueFilename()}"
 						postProcessor="#{matchView.postProcessXLS}" />
 				</h:commandLink>
+				
+				
 
 
 
