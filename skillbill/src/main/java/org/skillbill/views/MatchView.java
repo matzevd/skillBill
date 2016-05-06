@@ -2,8 +2,11 @@ package org.skillbill.views;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 
 import org.apache.log4j.Level;
@@ -15,7 +18,11 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.skillbill.common.Ausschreibung;
+import org.skillbill.common.MatchDTO;
 import org.skillbill.common.Mitarbeiter;
+import org.skillbill.common.Skill;
+import org.skillbill.converter.SkillConverter;
+import org.skillbill.dao.SkillDao;
 import org.skillbill.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,21 +39,45 @@ public class MatchView {
 	private  boolean wurdeGesucht = false;
 
 	private List<Ausschreibung> listeGefundenerAuschreibungenZuSkill;
-	private List<Mitarbeiter> listeGefundenerMitarbeiterZuSkill;
+	private List<MatchDTO> listeGefundenerMitarbeiterZuSkill;
+	
+	private List<Skill> listAllSkills;
+	private List<Skill> listSelectedSkills;
+	
+	private SkillConverter skillconverter;
+	
+	@Autowired
+	private SkillDao skillDao;
+	
+
 
 
 	@Autowired
 	private MatchService matchService;
+	
+	
+	
+	@PostConstruct
+    public void init() {
+		this.listSelectedSkills = new ArrayList<Skill>();
+		this.listAllSkills = new ArrayList<Skill>();
+		
+		try {
+			this.listAllSkills.addAll(skillDao.findAll());
+			skillconverter = new SkillConverter(listAllSkills);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
 	public void sucheStarten() {
 		wurdeGesucht = true;
 
 		switch (suchobjekt) {
 		case "Skill":
-			listeGefundenerAuschreibungenZuSkill = matchService
-					.sucheAusschreibungMatchesZuSkill(skillname);
 			
-			listeGefundenerMitarbeiterZuSkill = matchService.sucheMitarbeiterMatchesZuSkill(skillname);
+			listeGefundenerMitarbeiterZuSkill = matchService.sucheMitarbeiterMatchesZuSkills(listSelectedSkills);
 			break;
 
 		case "Ausschreibung":
@@ -63,6 +94,14 @@ public class MatchView {
 			break;
 
 		}
+		
+		
+		Collections.sort(listeGefundenerMitarbeiterZuSkill, new Comparator<MatchDTO>() {
+		    @Override
+		    public int compare(MatchDTO o1, MatchDTO o2) {
+		        return o2.getMatchProzent().compareTo(o1.getMatchProzent());
+		    }
+		});
 		Logger.getLogger(this.getClass().getName())
 				.log(Level.INFO,
 						"Class: "
@@ -124,17 +163,6 @@ public class MatchView {
 		this.wurdeGesucht = wurdeGesucht;
 	}
 
-	public List<Mitarbeiter> getListeGefundenerMitarbeiterZuSkill() {
-		if (listeGefundenerMitarbeiterZuSkill == null) {
-			listeGefundenerMitarbeiterZuSkill = new ArrayList<Mitarbeiter>();
-		}
-		return listeGefundenerMitarbeiterZuSkill;
-	}
-
-	public void setListeGefundenerMitarbeiterZuSkill(
-			List<Mitarbeiter> listeGefundenerMitarbeiterZuSkill) {
-		this.listeGefundenerMitarbeiterZuSkill = listeGefundenerMitarbeiterZuSkill;
-	}
 	
 	public String getSuchobjekt() {
 		return suchobjekt;
@@ -171,5 +199,46 @@ public class MatchView {
 	public void setMatchService(MatchService matchService) {
 		this.matchService = matchService;
 	}
+
+	public List<Skill> getListAllSkills() {
+		if (listAllSkills == null){
+			listAllSkills = new ArrayList<Skill>();
+		}
+		return listAllSkills;
+	}
+
+	public void setListAllSkills(List<Skill> listAllSkills) {
+		this.listAllSkills = listAllSkills;
+	}
+
+	public List<Skill> getListSelectedSkills() {
+		if (listSelectedSkills == null){
+			listSelectedSkills = new ArrayList<Skill>();
+		}
+		return listSelectedSkills;
+	}
+
+	public void setListSelectedSkills(List<Skill> listSelectedSkills) {
+		this.listSelectedSkills = listSelectedSkills;
+	}
+
+	public SkillConverter getSkillconverter() {
+		return skillconverter;
+	}
+
+	public void setSkillconverter(SkillConverter skillconverter) {
+		this.skillconverter = skillconverter;
+	}
+
+	public List<MatchDTO> getListeGefundenerMitarbeiterZuSkill() {
+		return listeGefundenerMitarbeiterZuSkill;
+	}
+
+	public void setListeGefundenerMitarbeiterZuSkill(
+			List<MatchDTO> listeGefundenerMitarbeiterZuSkill) {
+		this.listeGefundenerMitarbeiterZuSkill = listeGefundenerMitarbeiterZuSkill;
+	}
+
+
 
 }

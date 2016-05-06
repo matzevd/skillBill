@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.skillbill.common.Mitarbeiter;
+import org.skillbill.common.Skill;
 import org.skillbill.dao.MitarbeiterDao;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +28,20 @@ public class MitarbeiterDaoImpl extends EntityDaoImpl<Mitarbeiter> implements Mi
 				return query.getResultList();
 				
 			
-		}		
+		}
+
+	
+	@SuppressWarnings("unchecked")
+	public List<Mitarbeiter> findeMitarbeiterMitSkills(List<Long> skillliste) {
+
+
+		final String queryString = "select distinct mit from Mitarbeiter as mit, MitarbeiterSkill as ms "
+				+ "where ms.skillid in :value "
+				+ "and ms.mitarbeiterid = mit.id";
+		Query query = getEntityManager().createQuery(queryString);
+		query.setParameter("value", skillliste);
+		return query.getResultList();		
+	}		
 	
 }
 

@@ -10,5 +10,9 @@ public interface MitarbeiterSkillDao extends EntityDao<MitarbeiterSkill> {
 	
 	public List<MitarbeiterSkill> findByMitarbeiterId(final long mitarbeiterid);
 	
+	public List<MitarbeiterSkill> findBySkillIds (List<Long> skillids);
+	
+	public List<MitarbeiterSkill> findByMitarbeiterIdandSkillids(long mitarbeiterid,List<Long> listskills) ;
+
 	
 }

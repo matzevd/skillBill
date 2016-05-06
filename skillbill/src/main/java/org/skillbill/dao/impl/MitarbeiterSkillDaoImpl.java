@@ -27,6 +27,36 @@ public class MitarbeiterSkillDaoImpl extends EntityDaoImpl<MitarbeiterSkill> imp
 			throw e;
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<MitarbeiterSkill> findByMitarbeiterIdandSkillids(long mitarbeiterid,List<Long> listskills) {
+		try {
+			final String queryString = "select ms from  MitarbeiterSkill ms where ms.mitarbeiterid = :value and ms.skillid in :skills";
+			Query query = getEntityManager().createQuery(queryString);
+			query.setParameter("value", mitarbeiterid);
+			query.setParameter("skills", listskills);
+
+			return query.getResultList();
+			
+		} catch (RuntimeException e){
+			throw e;
+		}
+	}
+
+	
+	public List<MitarbeiterSkill> findBySkillIds(List<Long> skillids) {
+
+		
+		try {
+			final String queryString = "select ms from  MitarbeiterSkill ms where ms.skillid in :value ";
+			Query query = getEntityManager().createQuery(queryString);
+			query.setParameter("value", skillids);
+			return query.getResultList();
+			
+		} catch (RuntimeException e){
+			throw e;
+		}
+	}
 
 	
 }

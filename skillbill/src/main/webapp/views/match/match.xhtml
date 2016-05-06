@@ -28,9 +28,24 @@
 
 					<p:fieldset legend="Suchkriterien - Skill" id="fieldsetSkill"
 						rendered="#{matchView.suchobjekt == 'Skill'}">
-						<h:panelGrid>
+						<h:panelGrid columns="4">
 							<p:outputLabel for="skkurz" value="Skill-Kurzbezeichnung:" />
-							<p:inputText id="skkurz" value="#{matchView.skillname}"></p:inputText>
+							<p:selectCheckboxMenu id="skkurz"
+								value="#{matchView.listSelectedSkills}" label="Skills"
+								filter="true" filterMatchMode="startsWith"
+								panelStyle="width:250px" converter="#{matchView.skillconverter}">
+								<f:selectItems value="#{matchView.listAllSkills}"
+									itemLabel="#{sk.kurzbezeichnung}" itemValue="#{skill}" var="sk" />
+								<p:ajax event="change" update="formSuche:display" />
+							</p:selectCheckboxMenu>
+
+							<p:outputPanel id="display"
+								style="width:250px;padding-left:5px;margin-top:10px">
+								<p:dataList value="#{matchView.listSelectedSkills}" paginator="true" rows="5" paginatorPosition="top"
+									var="skillSelektierte" emptyMessage="Keine Skills ausgewählt">
+           						 #{skillSelektierte.kurzbezeichnung}
+       							 </p:dataList>
+							</p:outputPanel>
 						</h:panelGrid>
 					</p:fieldset>
 
@@ -108,8 +123,8 @@
 						<h:outputText value="#{zuskill.herausgeber}" />
 					</p:column>
 				</p:dataTable>
-				
-					<p:dataTable id="tblskillMIT" var="zuskill"
+
+				<p:dataTable id="tblskillMIT" var="zuskill"
 					value="#{matchView.listeGefundenerMitarbeiterZuSkill}"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
 					paginator="true" rows="10" style="margin-bottom:20px"
@@ -122,28 +137,35 @@
 						<f:facet name="header">
 							<h:outputText value="Id" />
 						</f:facet>
-						<h:outputText value="#{zuskill.id}" />
+						<h:outputText value="#{zuskill.mitarbeiter.id}" />
 					</p:column>
 
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="Vorname" />
 						</f:facet>
-						<h:outputText value="#{zuskill.vorname}" />
+						<h:outputText value="#{zuskill.mitarbeiter.vorname}" />
 					</p:column>
 
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="Nachname" />
 						</f:facet>
-						<h:outputText value="#{zuskill.nachname}" />
+						<h:outputText value="#{zuskill.mitarbeiter.nachname}" />
 					</p:column>
 
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="Personalnummer" />
 						</f:facet>
-						<h:outputText value="#{zuskill.personalnummer}" />
+						<h:outputText value="#{zuskill.mitarbeiter.personalnummer}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Trefferquote" />
+						</f:facet>
+						<h:outputText value="#{zuskill.matchProzent}" />
 					</p:column>
 				</p:dataTable>
 
@@ -154,8 +176,8 @@
 						fileName="#{matchView.baueFilename()}"
 						postProcessor="#{matchView.postProcessXLS}" />
 				</h:commandLink>
-				
-				
+
+
 
 
 
