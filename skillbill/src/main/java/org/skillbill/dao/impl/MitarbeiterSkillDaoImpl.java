@@ -44,6 +44,7 @@ public class MitarbeiterSkillDaoImpl extends EntityDaoImpl<MitarbeiterSkill> imp
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	public List<MitarbeiterSkill> findBySkillIds(List<Long> skillids) {
 
 		

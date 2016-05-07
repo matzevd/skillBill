@@ -29,5 +29,17 @@ public class AusschreibungDaoImpl extends EntityDaoImpl<Ausschreibung> implement
 				
 			
 		}	
+	
+	@SuppressWarnings("unchecked")
+	public List<Ausschreibung> findeAusschreibungMitSkills(List<Long> skillliste) {
+
+
+		final String queryString = "select distinct aus from Ausschreibung as aus, AusschreibungSkill as ask "
+				+ "where ask.skillid in :value "
+				+ "and ask.ausschreibungid = aus.id";
+		Query query = getEntityManager().createQuery(queryString);
+		query.setParameter("value", skillliste);
+		return query.getResultList();		
+	}
 }
 

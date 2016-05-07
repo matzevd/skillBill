@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.skillbill.common.Mitarbeiter;
-import org.skillbill.common.Skill;
 import org.skillbill.dao.MitarbeiterDao;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

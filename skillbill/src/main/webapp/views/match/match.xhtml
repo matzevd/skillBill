@@ -41,7 +41,8 @@
 
 							<p:outputPanel id="display"
 								style="width:250px;padding-left:5px;margin-top:10px">
-								<p:dataList value="#{matchView.listSelectedSkills}" paginator="true" rows="5" paginatorPosition="top"
+								<p:dataList value="#{matchView.listSelectedSkills}"
+									paginator="true" rows="5" paginatorPosition="top"
 									var="skillSelektierte" emptyMessage="Keine Skills ausgewählt">
            						 #{skillSelektierte.kurzbezeichnung}
        							 </p:dataList>
@@ -85,55 +86,18 @@
 
 
 
-
-				<p:dataTable id="tblskill" var="zuskill"
-					value="#{matchView.listeGefundenerAuschreibungenZuSkill}"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-					paginator="true" rows="10" style="margin-bottom:20px"
-					rendered="#{matchView.wurdeGesucht and matchView.suchobjekt == 'Skill'}">
-					<f:facet name="header">
-					Passende Ausschreibungen zum Suchfilter    
-					</f:facet>
-
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Id" />
-						</f:facet>
-						<h:outputText value="#{zuskill.id}" />
-					</p:column>
-
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Kurzbezeichnung" />
-						</f:facet>
-						<h:outputText value="#{zuskill.kurzbezeichnung}" />
-					</p:column>
-
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Beschreibung" />
-						</f:facet>
-						<h:outputText value="#{zuskill.beschreibung}" />
-					</p:column>
-
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Herausgeber" />
-						</f:facet>
-						<h:outputText value="#{zuskill.herausgeber}" />
-					</p:column>
-				</p:dataTable>
+  <p:tabView>
+        <p:tab title="Gefundene Mitarbeiter">
+		
 
 				<p:dataTable id="tblskillMIT" var="zuskill"
 					value="#{matchView.listeGefundenerMitarbeiterZuSkill}"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-					paginator="true" rows="10" style="margin-bottom:20px"
+					paginator="true" rows="10" style="margin-bottom:20px" paginatorPosition="top"
 					rendered="#{matchView.wurdeGesucht and matchView.suchobjekt == 'Skill'}">
-					<f:facet name="header">
-					Passende Mitarbeiter zum Suchfilter    
-					</f:facet>
+					
 
-					<p:column>
+					<p:column style="width:20px;">
 						<f:facet name="header">
 							<h:outputText value="Id" />
 						</f:facet>
@@ -154,18 +118,96 @@
 						<h:outputText value="#{zuskill.mitarbeiter.nachname}" />
 					</p:column>
 
-					<p:column>
+					<p:column style="width:120px;">
 						<f:facet name="header">
 							<h:outputText value="Personalnummer" />
 						</f:facet>
 						<h:outputText value="#{zuskill.mitarbeiter.personalnummer}" />
 					</p:column>
-					
-					<p:column>
+
+					<p:column style="width:80px;">
 						<f:facet name="header">
 							<h:outputText value="Trefferquote" />
 						</f:facet>
 						<h:outputText value="#{zuskill.matchProzent}" />
+					</p:column>
+
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Trefferskills" />
+						</f:facet>
+						<p:outputPanel id="display"
+							style="width:250px;padding-left:5px;margin-top:10px">
+							<p:dataList value="#{zuskill.listGefundenerSkills}"
+								paginator="true" rows="3" paginatorPosition="top"
+								var="skillSelektierte" emptyMessage="Keine Skills ausgewählt">
+           						 #{skillSelektierte.kurzbezeichnung}
+       							 </p:dataList>
+						</p:outputPanel>
+					</p:column>
+				</p:dataTable>
+				</p:tab>
+				
+				<p:tab title="Gefundene Ausschreibungen">
+						<p:dataTable id="tblskill" var="zuskill"
+					value="#{matchView.listeGefundenerAuschreibungenZuSkill}"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10" paginatorPosition="top" style="margin-bottom:20px"
+					rendered="#{matchView.wurdeGesucht and matchView.suchobjekt == 'Skill' and matchView.listeGefundenerAuschreibungenZuSkill.size() != 0}">
+					<f:facet name="header">
+					Passende Ausschreibungen zum Suchfilter    
+					</f:facet>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Id" />
+						</f:facet>
+						<h:outputText value="#{zuskill.ausschreibung.id}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Kurzbezeichnung" />
+						</f:facet>
+						<h:outputText value="#{zuskill.ausschreibung.kurzbezeichnung}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Beschreibung" />
+						</f:facet>
+						<h:outputText value="#{zuskill.ausschreibung.beschreibung}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Herausgeber" />
+						</f:facet>
+						<h:outputText value="#{zuskill.ausschreibung.herausgeber}" />
+					</p:column>
+					
+				
+
+					<p:column style="width:80px;">
+						<f:facet name="header">
+							<h:outputText value="Trefferquote" />
+						</f:facet>
+						<h:outputText value="#{zuskill.matchProzent}" />
+					</p:column>
+					
+						<p:column>
+						<f:facet name="header">
+							<h:outputText value="Trefferskills" />
+						</f:facet>
+						<p:outputPanel id="display"
+							style="width:250px;padding-left:5px;margin-top:10px">
+							<p:dataList value="#{zuskill.listGefundenerSkills}"
+								paginator="true" rows="3" paginatorPosition="top"
+								var="skillSelektierte" emptyMessage="Keine Skills ausgewählt">
+           						 #{skillSelektierte.kurzbezeichnung}
+       							 </p:dataList>
+						</p:outputPanel>
 					</p:column>
 				</p:dataTable>
 
@@ -176,6 +218,9 @@
 						fileName="#{matchView.baueFilename()}"
 						postProcessor="#{matchView.postProcessXLS}" />
 				</h:commandLink>
+				
+				</p:tab>
+				</p:tabView>
 
 
 

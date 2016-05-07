@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.skillbill.common.Ausschreibung;
+import org.skillbill.common.AusschreibungSkill;
 import org.skillbill.common.MatchDTO;
 import org.skillbill.common.Mitarbeiter;
 import org.skillbill.common.MitarbeiterSkill;
@@ -30,6 +31,9 @@ public class MatchService {
 
 	@Autowired
 	private MitarbeiterSkillDao mitarbeiterSkillDao;
+	
+	@Autowired
+	private AusschreibungSkillDao ausschreibungSkillDao;
 
 	public void sucheMitarbeiterMatchesZuSkill() {
 
@@ -53,7 +57,6 @@ public class MatchService {
 
 	public List<MatchDTO> sucheMitarbeiterMatchesZuSkills(
 			List<Skill> skilliste) {
-		List<MatchDTO> listMatch = new ArrayList<MatchDTO>();
 		List<Mitarbeiter> listMitarbeiterZuSkill = new ArrayList<Mitarbeiter>();
 		List<Long> listeSkillids = new ArrayList<Long>();
 
@@ -64,7 +67,34 @@ public class MatchService {
 		 listMitarbeiterZuSkill = mitarbeiterDao
 				.findeMitarbeiterMitSkills(listeSkillids);
 		 
-		 for (Mitarbeiter mitarbeiter : listMitarbeiterZuSkill) {
+		return erzeugeOberflaecheDatenSucheMitarbeiterVonSkill(listMitarbeiterZuSkill,
+				listeSkillids, skilliste);
+		 
+
+	}
+	
+	public List<MatchDTO> sucheAusschreibungMatchesZuSkills(
+			List<Skill> skilliste) {
+		List<Ausschreibung> listAusschreibungZuSkill = new ArrayList<Ausschreibung>();
+		List<Long> listeSkillids = new ArrayList<Long>();
+
+		for (Skill sk : skilliste) {
+			listeSkillids.add(sk.getId());
+		}
+
+		listAusschreibungZuSkill = ausschreibungDao.findeAusschreibungMitSkills(listeSkillids);
+		 
+		return erzeugeOberflaecheDatenSucheAusschreibungVonSkill(listAusschreibungZuSkill,
+				listeSkillids, skilliste);
+		 
+
+	}
+
+	private 	List<MatchDTO>  erzeugeOberflaecheDatenSucheMitarbeiterVonSkill(
+			List<Mitarbeiter> listMitarbeiterZuSkill, List<Long> listeSkillids, List<Skill> skilliste) {
+		List<MatchDTO> listMatch = new ArrayList<MatchDTO>();
+
+		for (Mitarbeiter mitarbeiter : listMitarbeiterZuSkill) {
 			 MatchDTO matchDto = new MatchDTO();
 			 matchDto.setMitarbeiter(mitarbeiter);
 			 List<MitarbeiterSkill> listfuerAnzahl = mitarbeiterSkillDao.findByMitarbeiterIdandSkillids(mitarbeiter.getId(),listeSkillids);
@@ -72,11 +102,47 @@ public class MatchService {
 			 double anzahlGefunderSkills = listfuerAnzahl.size();
 			 double prozentsatz = (double) (anzahlGefunderSkills / anzahlGesuchterSkills);
 			 matchDto.setMatchProzent(prozentsatz*100);
+			 
+			 for (MitarbeiterSkill msk : listfuerAnzahl) {
+				 for (Skill sk : skilliste) {
+					 if (msk.getSkillid() == sk.getId()){
+						 matchDto.getListGefundenerSkills().add(sk);
+					 }
+					
+				}
+				
+			}
 			 listMatch.add(matchDto);
 				 }
-		 
 		return listMatch;
+	}
+	
+	
+	private 	List<MatchDTO>  erzeugeOberflaecheDatenSucheAusschreibungVonSkill(
+			List<Ausschreibung> listAusschreibungZuSkill, List<Long> listeSkillids, List<Skill> skilliste) {
+		List<MatchDTO> listMatch = new ArrayList<MatchDTO>();
 
+		for (Ausschreibung aus : listAusschreibungZuSkill) {
+			 MatchDTO matchDto = new MatchDTO();
+			 matchDto.setAusschreibung(aus);
+			 List<AusschreibungSkill> listfuerAnzahl = ausschreibungSkillDao.findByAusschreibungIdandSkillids(aus.getId(),listeSkillids);
+			 double anzahlGesuchterSkills = listeSkillids.size();
+			 double anzahlGefunderSkills = listfuerAnzahl.size();
+			 double prozentsatz = (double) (anzahlGefunderSkills / anzahlGesuchterSkills);
+			 matchDto.setMatchProzent(prozentsatz*100);
+			 
+			 for (AusschreibungSkill ask : listfuerAnzahl) {
+				 for (Skill sk : skilliste) {
+					 if (ask.getSkillid() == sk.getId()){
+						 matchDto.getListGefundenerSkills().add(sk);
+					 }
+					
+				}
+				
+			}
+			 listMatch.add(matchDto);
+				 }
+		return listMatch;
 	}
 
 	public MitarbeiterDao getMitarbeiterDao() {

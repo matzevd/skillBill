@@ -17,9 +17,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.skillbill.common.Ausschreibung;
 import org.skillbill.common.MatchDTO;
-import org.skillbill.common.Mitarbeiter;
 import org.skillbill.common.Skill;
 import org.skillbill.converter.SkillConverter;
 import org.skillbill.dao.SkillDao;
@@ -38,7 +36,7 @@ public class MatchView {
 	private String skillname = null;
 	private  boolean wurdeGesucht = false;
 
-	private List<Ausschreibung> listeGefundenerAuschreibungenZuSkill;
+	private List<MatchDTO> listeGefundenerAuschreibungenZuSkill;
 	private List<MatchDTO> listeGefundenerMitarbeiterZuSkill;
 	
 	private List<Skill> listAllSkills;
@@ -78,10 +76,11 @@ public class MatchView {
 		case "Skill":
 			
 			listeGefundenerMitarbeiterZuSkill = matchService.sucheMitarbeiterMatchesZuSkills(listSelectedSkills);
+			listeGefundenerAuschreibungenZuSkill = matchService.sucheAusschreibungMatchesZuSkills(listSelectedSkills);
+
 			break;
 
 		case "Ausschreibung":
-			matchService.sucheMatchesZuAusschreibung();
 
 			break;
 
@@ -180,15 +179,15 @@ public class MatchView {
 		this.skillname = skillname;
 	}
 
-	public List<Ausschreibung> getListeGefundenerAuschreibungenZuSkill() {
+	public List<MatchDTO> getListeGefundenerAuschreibungenZuSkill() {
 		if (listeGefundenerAuschreibungenZuSkill == null) {
-			listeGefundenerAuschreibungenZuSkill = new ArrayList<Ausschreibung>();
+			listeGefundenerAuschreibungenZuSkill = new ArrayList<MatchDTO>();
 		}
 		return listeGefundenerAuschreibungenZuSkill;
 	}
 
 	public void setListeGefundenerAuschreibungenZuSkill(
-			List<Ausschreibung> listeGefundenerAuschreibungenZuSkill) {
+			List<MatchDTO> listeGefundenerAuschreibungenZuSkill) {
 		this.listeGefundenerAuschreibungenZuSkill = listeGefundenerAuschreibungenZuSkill;
 	}
 
