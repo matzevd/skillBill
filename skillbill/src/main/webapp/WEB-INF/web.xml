@@ -12,7 +12,7 @@
     <!-- Prime FACES -->
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>blitzer</param-value>
+		<param-value>start</param-value>
 	</context-param>
     <context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -41,9 +41,6 @@
 		<param-name>javax.faces.PARTIAL_STATE_SAVING</param-name>
 		<param-value>false</param-value>
 	</context-param>
-	
-
-
 
 
    <!-- Welcome Page -->
@@ -63,6 +60,8 @@
      <servlet-name>Faces Servlet</servlet-name>
      <url-pattern>*.xhtml</url-pattern>
    </servlet-mapping>
+   
+  
 
 
 

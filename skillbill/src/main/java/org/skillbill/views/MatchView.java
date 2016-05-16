@@ -53,8 +53,7 @@ public class MatchView {
 	@Autowired
 	private MatchService matchService;
 	
-	
-	
+
 	@PostConstruct
     public void init() {
 		this.listSelectedSkills = new ArrayList<Skill>();

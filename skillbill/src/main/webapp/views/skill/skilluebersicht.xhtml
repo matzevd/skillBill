@@ -39,15 +39,18 @@
 						<p:inputTextarea value="#{object.beschreibung}" />
 					</p:column>
 
-					<p:column headerText="Lösche" style="width:8%">
-						<p:commandLink update=":form2:display :form2:dialogLoeschen"
-							oncomplete="PF('confirmDeleteDlg').show()"
-							image="ui-icon ui-icon-close" title="Delete">
+				
+					
+						<p:column headerText="Details" style="width:8%">
+						<p:commandLink update=":form2:display"
+							oncomplete="PF('detailsDlg').show()"
+							image="ui-icon ui-icon-search" title="Details">
 							<f:setPropertyActionListener value="#{object}"
 								target="#{skillView.skillSelected}" />
-							<h:outputText styleClass="ui-icon ui-icon-close" />
+							<h:outputText styleClass="ui-icon ui-icon-search" />
 						</p:commandLink>
 					</p:column>
+					
 
 
 
@@ -56,31 +59,13 @@
 
 			<h:form id="form2">
 
-				<p:dialog header="Lösche Skill" widgetVar="confirmDeleteDlg"
-					resizable="false" width="500" height="60" showEffect="clip"
-					hideEffect="clip"  id="dialogLoeschen">
-
-					<p:outputPanel layout="block" style="text-align:center">
-						<p:commandButton
-							value="Skill #{skillView.skill.kurzbezeichnung} löschen! "
-							update=":form1:messages :form1:objects"
-							actionListener="#{skillView.delete}"
-							oncomplete="PF('confirmDeleteDlg').hide()">
-
-
-						</p:commandButton>
-
-						<p:commandButton value="Abbrechen"
-							onclick="PF('confirmDeleteDlg').hide()" type="button" />
-					</p:outputPanel>
-
-				</p:dialog>
+			
 
 
 
 				<p:dialog header="Bearbeiten Skill" widgetVar="detailsDlg"
 					resizable="false" width="750" height="400" showEffect="clip"
-					hideEffect="clip" modal="true">
+					hideEffect="clip" >
 
 					<h:panelGrid id="display" columns="2" cellpadding="4"
 						style="margin:0 auto;">
@@ -95,7 +80,7 @@
 
 						<h:outputText value="Beschreibung"
 							style="padding-left: 30px; padding-right: 30px;" />
-						<p:inputText value="#{skillView.skillSelected.beschreibung}" />
+						<p:inputTextarea value="#{skillView.skillSelected.beschreibung}" />
 
 
 					</h:panelGrid>
@@ -103,18 +88,18 @@
 					<p:outputPanel layout="block" style="text-align:center">
 						<br />
 						<br />
-						<p:commandButton value="Update"
+						<p:commandButton value="Änderung speichern"
 							update=":form1:objects :form1:messages"
 							actionListener="#{skillView.update}"
 							oncomplete="PF('detailsDlg').hide()" />
-						<p:commandButton value="Cancel" onclick="PF('detailsDlg').hide()"
+						<p:commandButton value="Abbrechen" onclick="PF('detailsDlg').hide()"
 							type="button" />
 					</p:outputPanel>
 
 				</p:dialog>
-
-
-
+				
+				
+				
 			</h:form>
 
 		</ui:define>

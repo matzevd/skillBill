@@ -2,6 +2,8 @@ package org.skillbill.common;
 
 
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,10 +20,15 @@ import javax.persistence.NamedQuery;
 }) 
 
 
-public class Skill {
+public class Skill implements Serializable {
 	
 
 	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4970560320159884453L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

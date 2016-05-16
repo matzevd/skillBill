@@ -1,6 +1,7 @@
 package org.skillbill.dao.impl;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -13,7 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
-public class SkillDaoImpl extends EntityDaoImpl<Skill> implements SkillDao {
+public class SkillDaoImpl extends EntityDaoImpl<Skill> implements SkillDao, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7919391040715163407L;
 
 	public Skill findByName(String skillname){
 		try {

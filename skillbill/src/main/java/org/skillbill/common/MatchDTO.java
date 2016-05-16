@@ -1,11 +1,18 @@
+
 package org.skillbill.common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchDTO {
+public class MatchDTO implements Serializable{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4797073074416320825L;
+
 	private Mitarbeiter mitarbeiter;
 	
 	private Ausschreibung ausschreibung;

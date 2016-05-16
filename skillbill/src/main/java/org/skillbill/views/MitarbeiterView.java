@@ -23,12 +23,13 @@ import org.skillbill.enums.GeschlechtEnum;
 import org.skillbill.enums.StandortEnum;
 import org.skillbill.service.MitarbeiterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 
 
 @Component(value="mitarbeiterView")
-@ViewScoped
+@Scope(value="session")
 public class MitarbeiterView implements Serializable {
 	
 	
