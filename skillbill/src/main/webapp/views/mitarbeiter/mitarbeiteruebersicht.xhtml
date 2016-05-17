@@ -103,7 +103,7 @@
 
 
 				<p:dialog header="Bearbeiten Mitarbeiter" widgetVar="detailsDlg"
-					resizable="false" width="750" height="400" showEffect="clip"
+					resizable="false" width="800" height="600" showEffect="clip"
 					hideEffect="clip" appendToBody="true">
 
 					<h:panelGrid id="display" columns="2" cellpadding="4"
@@ -179,10 +179,21 @@
 							value="#{mitarbeiterView.mitarbeiterSelected.telefonnummer}" />
 
 
+						<p:selectCheckboxMenu id="skkurz"
+							value="#{mitarbeiterView.listSelectedSkills}" label="Skills"
+							filter="true" filterMatchMode="startsWith"
+							panelStyle="width:250px" 
+							converter="#{mitarbeiterView.skillconverter}">
+							<f:selectItems value="#{mitarbeiterView.listAllSkills}"
+								itemLabel="#{sk.kurzbezeichnung}" itemValue="#{skill}" var="sk" />
+							<p:ajax event="change" update="form2:skills" />
+						</p:selectCheckboxMenu>
+
 						<p:outputPanel id="skills"
 							style="width:250px;padding-left:5px;margin-top:10px">
 							<p:dataList value="#{mitarbeiterView.listSelectedSkills}"
-								var="skills" emptyMessage="Keine Skills gefunden">
+								var="skills" emptyMessage="Keine Skills gefunden"
+								paginator="true" rows="5" paginatorPosition="top">
             				#{skills.kurzbezeichnung}
        					 </p:dataList>
 						</p:outputPanel>

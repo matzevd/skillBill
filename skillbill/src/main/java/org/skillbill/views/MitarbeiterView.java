@@ -3,10 +3,12 @@ package org.skillbill.views;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
@@ -175,7 +177,18 @@ public class MitarbeiterView implements Serializable {
 	
 	public void ermittleSkillsZuMitarbeiter(){
 		try {
-			listSelectedSkills = mitarbeiterService.sucheSkillsZuMitarbeiter(mitarbeiterSelected.getId());
+			List<Skill> templistSelectedSkills = mitarbeiterService.sucheSkillsZuMitarbeiter(mitarbeiterSelected.getId());
+			
+			for (Skill allskill : listAllSkills) {
+				for (Skill tempskill : templistSelectedSkills) {
+					if (allskill.getId() == tempskill.getId()){
+						listSelectedSkills.add(allskill);
+					}
+				}
+			}
+		
+			skillconverter = new SkillConverter(listAllSkills);
+			
 		} catch (Exception e) {
 			Logger.getLogger(this.getClass().getName()).log(Level.ERROR, "Operation ermittleSkillsZuMitarbeiter Error ",e);
 			FacesMessage msg = null;  
@@ -185,8 +198,6 @@ public class MitarbeiterView implements Serializable {
 		}
 	}
 	
-	
-
 
 	public List<Mitarbeiter> getList() {
 		if(list == null){
