@@ -22,6 +22,7 @@
 								<f:selectItem itemLabel="Ausschreibung"
 									itemValue="Ausschreibung" />
 								<p:ajax event="change" update="formSuche" />
+								<f:event type="javax.faces.event.PreRenderViewEvent" listener="#{matchView.preRenderView}"/>
 							</p:selectOneRadio>
 						</h:panelGrid>
 					</p:fieldset>

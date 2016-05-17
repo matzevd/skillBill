@@ -14,12 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
-public class SkillDaoImpl extends EntityDaoImpl<Skill> implements SkillDao, Serializable {
+public class SkillDaoImpl extends EntityDaoImpl<Skill> implements SkillDao{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7919391040715163407L;
+
 
 	public Skill findByName(String skillname){
 		try {

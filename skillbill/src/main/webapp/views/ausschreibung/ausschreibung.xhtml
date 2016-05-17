@@ -28,7 +28,10 @@
 
 						<p:inputText id="kurzbezeichnung"
 							value="#{ausschreibungView.ausschreibung.kurzbezeichnung}" required="true"
-							label="kurzbezeichnung" requiredMessage="Kurzbezeichnung bitte eingeben" style="width:173px"/>
+							label="kurzbezeichnung" requiredMessage="Kurzbezeichnung bitte eingeben" style="width:173px">
+							<f:event type="javax.faces.event.PreRenderViewEvent"
+								listener="#{ausschreibungView.preRenderView}" />
+								</p:inputText>
 
 						<h:outputText value="Herausgeber" for="herausgeber"
 							style="padding-left: 30px; padding-right: 30px;" />

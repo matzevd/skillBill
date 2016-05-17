@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -59,8 +60,29 @@ public class MitarbeiterView implements Serializable {
 	
 	private List<Skill> listAllSkills;
 	private List<Skill> listSelectedSkills;
+	
+	 public void preRenderView() {
+		 //Aufgrund eines Bugs bei Primefaces muss hier so eine Session erzeugt werden
+	      HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true );
+	    erzeugeSkillliste();
+	  
+	   }
 
 	
+	private void erzeugeSkillliste() {
+		
+		this.listSelectedSkills = new ArrayList<Skill>();
+		this.listAllSkills = new ArrayList<Skill>();
+		try {
+			this.listAllSkills.addAll(skillDao.findAll());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		skillconverter = new SkillConverter(listAllSkills);	
+	}
+
+
 	@PostConstruct
     public void init() {
 		refreshList();
@@ -75,16 +97,13 @@ public class MitarbeiterView implements Serializable {
 		this.list = new ArrayList<Mitarbeiter>();
 		this.listSelected = new ArrayList<Mitarbeiter>();
 		
-		this.listSelectedSkills = new ArrayList<Skill>();
-		this.listAllSkills = new ArrayList<Skill>();
-
+		erzeugeSkillliste();
 		
 		try {
 			this.list.addAll(mitarbeiterDao.findAll());
 			this.listSelected.addAll(this.list);
 			
-			this.listAllSkills.addAll(skillDao.findAll());
-			skillconverter = new SkillConverter(listAllSkills);		
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

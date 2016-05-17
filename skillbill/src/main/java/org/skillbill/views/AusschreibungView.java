@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -29,7 +30,7 @@ import org.springframework.stereotype.Component;
 @ViewScoped
 public class AusschreibungView implements Serializable {
 	
-	
+
 
 	/**
 	 * Das ist die Oberflächenklassen für ausschreibungView
@@ -62,6 +63,29 @@ public class AusschreibungView implements Serializable {
     public void init() {
 		refreshList();
     }
+	
+	
+	
+	 public void preRenderView() {
+		 //Aufgrund eines Bugs bei Primefaces muss hier so eine Session erzeugt werden
+	      HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true );
+	    erzeugeSkillliste();
+	  
+	   }
+	 
+		private void erzeugeSkillliste() {
+			
+			this.listSelectedSkills = new ArrayList<Skill>();
+			this.listAllSkills = new ArrayList<Skill>();
+			try {
+				this.listAllSkills.addAll(skillDao.findAll());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			skillconverter = new SkillConverter(listAllSkills);	
+		}
+
 
 
 
@@ -72,16 +96,12 @@ public class AusschreibungView implements Serializable {
 		this.list = new ArrayList<Ausschreibung>();
 		this.listSelected = new ArrayList<Ausschreibung>();
 		
-		this.listSelectedSkills = new ArrayList<Skill>();
-		this.listAllSkills = new ArrayList<Skill>();
-
+		erzeugeSkillliste();
 		
 		try {
 			this.list.addAll(ausschreibungDao.findAll());
 			this.listSelected.addAll(this.list);
-			
-			this.listAllSkills.addAll(skillDao.findAll());
-			skillconverter = new SkillConverter(listAllSkills);		
+				
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -5,13 +5,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchDTO implements Serializable{
-	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4797073074416320825L;
+public class MatchDTO {
+
 
 	private Mitarbeiter mitarbeiter;
 	

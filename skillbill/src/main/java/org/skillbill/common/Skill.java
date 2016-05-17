@@ -20,15 +20,9 @@ import javax.persistence.NamedQuery;
 }) 
 
 
-public class Skill implements Serializable {
+public class Skill  {
 	
 
-	
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4970560320159884453L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

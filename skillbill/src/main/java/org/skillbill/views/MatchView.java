@@ -1,6 +1,7 @@
 package org.skillbill.views;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,6 +9,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -30,8 +33,12 @@ import org.springframework.stereotype.Component;
 
 @Component(value = "matchView")
 @ViewScoped
-public class MatchView {
+public class MatchView implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3883251696913908345L;
 	private String suchobjekt = null;
 	private String skillname = null;
 	private  boolean wurdeGesucht = false;
@@ -48,14 +55,24 @@ public class MatchView {
 	private SkillDao skillDao;
 	
 
-
-
 	@Autowired
 	private MatchService matchService;
 	
+	
+	 public void preRenderView() {
+		 //Aufgrund eines Bugs bei Primefaces muss hier so eine Session erzeugt werden
+	      HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true );
+	    erzeugeSkillliste();
+	  
+	   }
 
 	@PostConstruct
     public void init() {
+
+		erzeugeSkillliste();
+    }
+
+	private void erzeugeSkillliste() {
 		this.listSelectedSkills = new ArrayList<Skill>();
 		this.listAllSkills = new ArrayList<Skill>();
 		
@@ -66,7 +83,7 @@ public class MatchView {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
+	}
 
 	public void sucheStarten() {
 		wurdeGesucht = true;

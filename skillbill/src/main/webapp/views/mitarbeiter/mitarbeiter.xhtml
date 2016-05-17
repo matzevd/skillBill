@@ -29,7 +29,10 @@
 						<p:inputText id="vorname"
 							value="#{mitarbeiterView.mitarbeiter.vorname}" required="true"
 							label="Vorname" requiredMessage="Vornamen bitte eingeben"
-							style="width:173px" />
+							style="width:173px">
+							<f:event type="javax.faces.event.PreRenderViewEvent"
+								listener="#{mitarbeiterView.preRenderView}" />
+						</p:inputText>
 
 						<h:outputText value="Nachname" for="nachname"
 							style="padding-left: 30px; padding-right: 30px;" />
@@ -109,9 +112,11 @@
 							<p:selectCheckboxMenu id="menu"
 								value="#{mitarbeiterView.listSelectedSkills}" label="Skills"
 								filter="true" filterMatchMode="startsWith"
-								panelStyle="width:250px" converter="#{mitarbeiterView.skillconverter}">
-								<p:ajax event="change" update="form1:skills"/>
-								<f:selectItems value="#{mitarbeiterView.listAllSkills}" itemLabel="#{sk.kurzbezeichnung}" itemValue="#{skill}" var="sk"/>
+								panelStyle="width:250px"
+								converter="#{mitarbeiterView.skillconverter}">
+								<p:ajax event="change" update="form1:skills" />
+								<f:selectItems value="#{mitarbeiterView.listAllSkills}"
+									itemLabel="#{sk.kurzbezeichnung}" itemValue="#{skill}" var="sk" />
 							</p:selectCheckboxMenu>
 
 							<p:outputPanel id="skills"
@@ -122,9 +127,9 @@
        					 </p:dataList>
 							</p:outputPanel>
 						</h:panelGrid>
-						</h:panelGrid>
-						
-						<h:panelGrid>
+					</h:panelGrid>
+
+					<h:panelGrid>
 
 						<p:outputPanel layout="block" style="text-align:center">
 							<br />
