@@ -129,7 +129,7 @@ public class MitarbeiterView implements Serializable {
 
 	public void update() {
 		try {
-			mitarbeiterDao.merge(this.mitarbeiterSelected);
+			mitarbeiterService.updateMitarbeiter(this.mitarbeiterSelected,this.listSelectedSkills);
 			
 			notificationSuccess("Mitarbeiter " + this.mitarbeiterSelected.getVorname()+ " " + this.mitarbeiterSelected.getNachname() + " erfolgreich bearbeitet!");
 			refreshList();
@@ -177,6 +177,8 @@ public class MitarbeiterView implements Serializable {
 	
 	public void ermittleSkillsZuMitarbeiter(){
 		try {
+			
+			getListSelectedSkills().clear();
 			List<Skill> templistSelectedSkills = mitarbeiterService.sucheSkillsZuMitarbeiter(mitarbeiterSelected.getId());
 			
 			for (Skill allskill : listAllSkills) {

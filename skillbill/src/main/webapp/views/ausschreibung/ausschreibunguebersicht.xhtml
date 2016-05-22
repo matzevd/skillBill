@@ -23,12 +23,16 @@
 					<f:facet name="header">
 Ausschreibungübersicht    </f:facet>
 
+					<f:event type="javax.faces.event.PreRenderViewEvent"
+						listener="#{ausschreibungView.preRenderView}" />
+
 					<p:column headerText="Ausschreibungsnummer" sortBy="#{object.id}"
 						filterBy="#{object.id}" filterMatchMode="contains">
 						<h:outputText value="#{object.id}" />
 					</p:column>
 
-					<p:column headerText="Kurzbezeichnung" sortBy="#{object.kurzbezeichnung}"
+					<p:column headerText="Kurzbezeichnung"
+						sortBy="#{object.kurzbezeichnung}"
 						filterBy="#{object.kurzbezeichnung}" filterMatchMode="contains">
 						<h:outputText value="#{object.kurzbezeichnung}" />
 					</p:column>
@@ -39,30 +43,29 @@ Ausschreibungübersicht    </f:facet>
 					</p:column>
 
 
-					<p:column headerText="Beschreibung"
-						sortBy="#{object.beschreibung}"
+					<p:column headerText="Beschreibung" sortBy="#{object.beschreibung}"
 						filterBy="#{object.beschreibung}" filterMatchMode="contains">
 						<h:outputText value="#{object.beschreibung}" />
 					</p:column>
 
-					
-					
+
+
 					<p:column headerText="Lösche" style="width:8%">
 						<p:commandLink update=":form1:display :form1:dialogLoeschen"
 							oncomplete="PF('confirmDeleteDlg').show()"
 							image="ui-icon ui-icon-close" title="Delete">
 							<f:setPropertyActionListener value="#{object}"
 								target="#{ausschreibungView.ausschreibungSelected}" />
-								<h:outputText styleClass="ui-icon ui-icon-close" />
+							<h:outputText styleClass="ui-icon ui-icon-close" />
 						</p:commandLink>
 					</p:column>
-					
-					
-					
+
+
+
 					<p:column headerText="Details" style="width:8%">
 						<p:commandLink update=":form1:display"
 							oncomplete="PF('detailsDlg').show()"
-							image="ui-icon ui-icon-search" title="Details" 
+							image="ui-icon ui-icon-search" title="Details"
 							action="#{ausschreibungView.ermittleSkillsZuAusschreibung()}">
 							<f:setPropertyActionListener value="#{object}"
 								target="#{ausschreibungView.ausschreibungSelected}" />
@@ -76,7 +79,7 @@ Ausschreibungübersicht    </f:facet>
 
 				<p:dialog header="Lösche Ausschreibung" widgetVar="confirmDeleteDlg"
 					resizable="false" width="500" height="60" showEffect="clip"
-					hideEffect="clip"  id="dialogLoeschen">
+					hideEffect="clip" id="dialogLoeschen">
 
 					<p:outputPanel layout="block" style="text-align:center">
 						<p:commandButton
@@ -84,8 +87,8 @@ Ausschreibungübersicht    </f:facet>
 							update=":form1:messages :form1:objects"
 							actionListener="#{ausschreibungView.delete}"
 							oncomplete="PF('confirmDeleteDlg').hide()">
-	
-						
+
+
 						</p:commandButton>
 
 						<p:commandButton value="Abbrechen"
@@ -98,7 +101,7 @@ Ausschreibungübersicht    </f:facet>
 
 				<p:dialog header="Bearbeiten Ausschreibung" widgetVar="detailsDlg"
 					resizable="false" width="750" height="400" showEffect="clip"
-					hideEffect="clip"  appendToBody="true">
+					hideEffect="clip" appendToBody="true">
 
 					<h:panelGrid id="display" columns="2" cellpadding="4"
 						style="margin:0 auto;">
@@ -117,20 +120,20 @@ Ausschreibungübersicht    </f:facet>
 						<p:inputText
 							value="#{ausschreibungView.ausschreibungSelected.herausgeber}" />
 
-			
+
 
 						<h:outputText value="Beschreibung"
 							style="padding-left: 30px; padding-right: 30px;" />
 						<p:inputText
 							value="#{ausschreibungView.ausschreibungSelected.beschreibung}" />
-					
-	<p:outputPanel id="skills"
+
+						<p:outputPanel id="skills"
 							style="width:250px;padding-left:5px;margin-top:10px">
 							<p:dataList value="#{ausschreibungView.listSelectedSkills}"
 								var="skills" emptyMessage="Keine Skills gefunden">
             				#{skills.kurzbezeichnung}
        					 </p:dataList>
-       					 </p:outputPanel>
+						</p:outputPanel>
 
 					</h:panelGrid>
 

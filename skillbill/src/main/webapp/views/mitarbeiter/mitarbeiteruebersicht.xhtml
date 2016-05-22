@@ -23,6 +23,8 @@
 					filteredValue="#{mitarbeiterView.listSelected}">
 					<f:facet name="header">
 					Mitarbeiterübersicht    </f:facet>
+					<f:event type="javax.faces.event.PreRenderViewEvent"
+								listener="#{mitarbeiterView.preRenderView}" />
 
 					<p:column headerText="ID" sortBy="#{object.id}"
 						filterBy="#{object.id}" filterMatchMode="contains">
