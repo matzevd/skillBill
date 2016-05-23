@@ -1,6 +1,7 @@
 package org.skillbill.views;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -58,7 +59,10 @@ public class MatchView implements Serializable {
 		// werden
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(true);
+		if (!wurdeGesucht){
 		erzeugeSkillliste();
+		}
+		
 
 	}
 
@@ -175,6 +179,17 @@ public class MatchView implements Serializable {
 		wurdeGesucht = false;
 		listeGefundenerAuschreibungenZuSkill = new ArrayList<MatchDTO>();
 		listeGefundenerMitarbeiterZuSkill = new ArrayList<MatchDTO>();
+	}
+	
+	public String gebeUrl(){
+		reset();
+		return "/views/match/match.xhtml";
+		
+	}
+	
+	public String gebeNurZweiNachkommastellen(double matchprozent){
+		DecimalFormat f = new DecimalFormat("#0.00"); 
+		return f.format(matchprozent);
 	}
 
 	// -------------------------------------------GETTER und SETTER - MEthoden

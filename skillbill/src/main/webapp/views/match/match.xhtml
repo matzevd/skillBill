@@ -90,7 +90,7 @@
 
 
 
-  <p:tabView>
+  <p:tabView rendered="#{matchView.wurdeGesucht and matchView.suchobjekt == 'Skill'}">
         <p:tab title="Gefundene Mitarbeiter">
 		
 
@@ -98,7 +98,7 @@
 					value="#{matchView.listeGefundenerMitarbeiterZuSkill}"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
 					paginator="true" rows="10" style="margin-bottom:20px" paginatorPosition="top"
-					rendered="#{matchView.wurdeGesucht and matchView.suchobjekt == 'Skill'}">
+					>
 					
 
 					<p:column style="width:20px;">
@@ -133,7 +133,7 @@
 						<f:facet name="header">
 							<h:outputText value="Trefferquote" />
 						</f:facet>
-						<h:outputText value="#{zuskill.matchProzent}" />
+						<h:outputText value="#{matchView.gebeNurZweiNachkommastellen(zuskill.matchProzent)}" />
 					</p:column>
 
 
