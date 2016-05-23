@@ -12,7 +12,7 @@
       	<f:facet name="header">
 	------------------------------------------------------------------------------SkillBill - das geniale Skillmanagement-Tool --------------------------------------------------------------------------------------------------------------
 	    </f:facet>
-  
+  <h:form>
   		<p:menubar>
   		
   		<p:menuitem>
@@ -33,9 +33,9 @@
  
  	<p:submenu label="Mitarbeiterverwaltung" icon="ui-icon-person">
      
-            <p:menuitem value="Übersicht" url="/views/mitarbeiter/mitarbeiteruebersicht.xhtml" />
+            <p:menuitem value="Übersicht" action="#{mitarbeiterView.istUebersicht}"/>
             <p:separator />
-            <p:menuitem value="Mitarbeiter hinzufügen" url="/views/mitarbeiter/mitarbeiter.xhtml" />
+            <p:menuitem value="Mitarbeiter hinzufügen"  action="#{mitarbeiterView.istNeu}"/>
         </p:submenu>
   		
   		
@@ -51,7 +51,7 @@
   		
   		
   		</p:menubar>
-  
+  </h:form>
   
       </ui:composition>	
    </body>

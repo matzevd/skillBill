@@ -1,6 +1,5 @@
 package org.skillbill.views;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,12 +27,9 @@ import org.skillbill.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
-
-
 @Component(value = "matchView")
 @ViewScoped
-public class MatchView implements Serializable{
+public class MatchView implements Serializable {
 
 	/**
 	 * 
@@ -41,41 +37,44 @@ public class MatchView implements Serializable{
 	private static final long serialVersionUID = -3883251696913908345L;
 	private String suchobjekt = null;
 	private String skillname = null;
-	private  boolean wurdeGesucht = false;
+	private boolean wurdeGesucht = false;
 
 	private List<MatchDTO> listeGefundenerAuschreibungenZuSkill;
 	private List<MatchDTO> listeGefundenerMitarbeiterZuSkill;
-	
+
 	private List<Skill> listAllSkills;
 	private List<Skill> listSelectedSkills;
-	
+
 	private SkillConverter skillconverter;
-	
+
 	@Autowired
 	private SkillDao skillDao;
-	
 
 	@Autowired
 	private MatchService matchService;
-	
-	
-	 public void preRenderView() {
-		 //Aufgrund eines Bugs bei Primefaces muss hier so eine Session erzeugt werden
-	      HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true );
-	    erzeugeSkillliste();
-	  
-	   }
+
+	public void preRenderView() {
+		// Aufgrund eines Bugs bei Primefaces muss hier so eine Session erzeugt
+		// werden
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(true);
+		erzeugeSkillliste();
+
+	}
 
 	@PostConstruct
-    public void init() {
+	public void init() {
 
 		erzeugeSkillliste();
-    }
+	}
 
 	private void erzeugeSkillliste() {
+		if (this.listSelectedSkills == null){
 		this.listSelectedSkills = new ArrayList<Skill>();
+		}
 		this.listAllSkills = new ArrayList<Skill>();
 		
+
 		try {
 			this.listAllSkills.addAll(skillDao.findAll());
 			skillconverter = new SkillConverter(listAllSkills);
@@ -90,9 +89,11 @@ public class MatchView implements Serializable{
 
 		switch (suchobjekt) {
 		case "Skill":
-			
-			listeGefundenerMitarbeiterZuSkill = matchService.sucheMitarbeiterMatchesZuSkills(listSelectedSkills);
-			listeGefundenerAuschreibungenZuSkill = matchService.sucheAusschreibungMatchesZuSkills(listSelectedSkills);
+
+			listeGefundenerMitarbeiterZuSkill = matchService
+					.sucheMitarbeiterMatchesZuSkills(listSelectedSkills);
+			listeGefundenerAuschreibungenZuSkill = matchService
+					.sucheAusschreibungMatchesZuSkills(listSelectedSkills);
 
 			break;
 
@@ -109,67 +110,75 @@ public class MatchView implements Serializable{
 			break;
 
 		}
-		
-		
-		Collections.sort(listeGefundenerMitarbeiterZuSkill, new Comparator<MatchDTO>() {
-		    @Override
-		    public int compare(MatchDTO o1, MatchDTO o2) {
-		        return o2.getMatchProzent().compareTo(o1.getMatchProzent());
-		    }
-		});
-		Logger.getLogger(this.getClass().getName())
-				.log(Level.INFO,
-						"Class: "
-								+ this.getClass()
-								+ "/ Operation  sucheStarten  war erfolgreich ");
+
+		Collections.sort(listeGefundenerMitarbeiterZuSkill,
+				new Comparator<MatchDTO>() {
+					@Override
+					public int compare(MatchDTO o1, MatchDTO o2) {
+						return o2.getMatchProzent().compareTo(
+								o1.getMatchProzent());
+					}
+				});
+		Logger.getLogger(this.getClass().getName()).log(
+				Level.INFO,
+				"Class: " + this.getClass()
+						+ "/ Operation  sucheStarten  war erfolgreich ");
 
 	}
 
+	public void postProcessXLS(Object document) {
+		HSSFWorkbook wb = (HSSFWorkbook) document;
+		HSSFSheet sheet = wb.getSheetAt(0);
+		HSSFRow header = sheet.getRow(0);
 
+		HSSFCellStyle cellStyle = wb.createCellStyle();
+		cellStyle.setFillForegroundColor(HSSFColor.GREEN.index);
+		cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+
+		for (int i = 0; i < header.getPhysicalNumberOfCells(); i++) {
+			HSSFCell cell = header.getCell(i);
+
+			cell.setCellStyle(cellStyle);
+		}
+	}
+
+	public String baueFilename() {
+		String filename = null;
+		switch (suchobjekt) {
+		case "Skill":
+			filename = "MatchZuSkill_" + skillname;
+			break;
+
+		case "Ausschreibung":
+
+			break;
+
+		case "Mitareiter":
+
+			break;
+
+		default:
+			filename = "MatchOhneFilterung";
+			break;
+
+		}
+		return filename;
+	}
 	
+	public void test(){
+		System.out.println("Testtesttestmatchview matchivew test");
+	}
 
-	
-	  public void postProcessXLS(Object document) {
-	        HSSFWorkbook wb = (HSSFWorkbook) document;
-	        HSSFSheet sheet = wb.getSheetAt(0);
-	        HSSFRow header = sheet.getRow(0);
-	         
-	        HSSFCellStyle cellStyle = wb.createCellStyle();  
-	        cellStyle.setFillForegroundColor(HSSFColor.GREEN.index);
-	        cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-	         
-	        for(int i=0; i < header.getPhysicalNumberOfCells();i++) {
-	            HSSFCell cell = header.getCell(i);
-	             
-	            cell.setCellStyle(cellStyle);
-	        }
-	    }
-	  
-	  public String baueFilename(){
-		  String filename = null;
-			switch (suchobjekt) {
-			case "Skill":
-				filename = "MatchZuSkill_" +skillname;
-				break;
+	public void reset() {
+		suchobjekt = null;
+		skillname = null;
+		wurdeGesucht = false;
+		listeGefundenerAuschreibungenZuSkill = new ArrayList<MatchDTO>();
+		listeGefundenerMitarbeiterZuSkill = new ArrayList<MatchDTO>();
+	}
 
-			case "Ausschreibung":
-
-				break;
-
-			case "Mitareiter":
-
-				break;
-
-			default:
-				filename = "MatchOhneFilterung";
-				break;
-
-			}
-			return filename;
-	  }
-
-	  
-	//-------------------------------------------GETTER und SETTER - MEthoden ------------------------------------------------
+	// -------------------------------------------GETTER und SETTER - MEthoden
+	// ------------------------------------------------
 	public boolean isWurdeGesucht() {
 		return wurdeGesucht;
 	}
@@ -178,7 +187,6 @@ public class MatchView implements Serializable{
 		this.wurdeGesucht = wurdeGesucht;
 	}
 
-	
 	public String getSuchobjekt() {
 		return suchobjekt;
 	}
@@ -216,7 +224,7 @@ public class MatchView implements Serializable{
 	}
 
 	public List<Skill> getListAllSkills() {
-		if (listAllSkills == null){
+		if (listAllSkills == null) {
 			listAllSkills = new ArrayList<Skill>();
 		}
 		return listAllSkills;
@@ -227,7 +235,7 @@ public class MatchView implements Serializable{
 	}
 
 	public List<Skill> getListSelectedSkills() {
-		if (listSelectedSkills == null){
+		if (listSelectedSkills == null) {
 			listSelectedSkills = new ArrayList<Skill>();
 		}
 		return listSelectedSkills;
@@ -253,7 +261,5 @@ public class MatchView implements Serializable{
 			List<MatchDTO> listeGefundenerMitarbeiterZuSkill) {
 		this.listeGefundenerMitarbeiterZuSkill = listeGefundenerMitarbeiterZuSkill;
 	}
-
-
 
 }

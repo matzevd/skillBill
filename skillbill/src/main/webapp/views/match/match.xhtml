@@ -37,7 +37,7 @@
 								panelStyle="width:250px" converter="#{matchView.skillconverter}">
 								<f:selectItems value="#{matchView.listAllSkills}"
 									itemLabel="#{sk.kurzbezeichnung}" itemValue="#{skill}" var="sk" />
-								<p:ajax event="change" update="formSuche:display" />
+								<p:ajax event="change" update="formSuche:display"/>
 							</p:selectCheckboxMenu>
 
 							<p:outputPanel id="display"
@@ -77,10 +77,13 @@
 						</h:panelGrid>
 					</p:fieldset>
 
-
+					<h:panelGrid columns="1" style="border:none">
 					<p:commandButton value="Suchen" id="suche" icon="ui-icon-search"
 						action="#{matchView.sucheStarten}" update="@all" />
-
+						
+						<p:commandButton value="Reset" id="reset" icon="ui-icon-arrowrefresh-1-e"
+						action="#{matchView.reset}" update="@all" style="width:98px"/>
+					</h:panelGrid>
 
 				</p:panelGrid>
 				<p:separator></p:separator>

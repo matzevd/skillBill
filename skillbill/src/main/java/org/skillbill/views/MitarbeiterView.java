@@ -54,6 +54,8 @@ public class MitarbeiterView implements Serializable {
 	
 	private SkillConverter skillconverter;
 	
+	private boolean isUsecaseNeuerMitarbeiter = false;
+	
 
 	private Mitarbeiter mitarbeiter;
 	private Mitarbeiter mitarbeiterSelected;
@@ -72,14 +74,29 @@ public class MitarbeiterView implements Serializable {
 
 	
 	private void erzeugeSkillliste() {
-		
-		this.listSelectedSkills = new ArrayList<Skill>();
-		this.listAllSkills = new ArrayList<Skill>();
+			this.listAllSkills = new ArrayList<Skill>();
 		try {
 			this.listAllSkills.addAll(skillDao.findAll());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		if (!isUsecaseNeuerMitarbeiter){
+		List<Skill> templistSelectedSkills = new ArrayList<Skill>();
+		templistSelectedSkills.addAll(getListSelectedSkills());
+		
+		getListSelectedSkills().clear();
+		for (Skill allskill : listAllSkills) {
+			for (Skill tempskill : templistSelectedSkills) {
+				if (allskill.getId() == tempskill.getId()){
+					listSelectedSkills.add(allskill);
+				}
+			}
+		}
+		}
+		else {
+			listSelectedSkills = new ArrayList<Skill>();
 		}
 		skillconverter = new SkillConverter(listAllSkills);	
 	}
@@ -180,7 +197,6 @@ public class MitarbeiterView implements Serializable {
 			
 			getListSelectedSkills().clear();
 			List<Skill> templistSelectedSkills = mitarbeiterService.sucheSkillsZuMitarbeiter(mitarbeiterSelected.getId());
-			
 			for (Skill allskill : listAllSkills) {
 				for (Skill tempskill : templistSelectedSkills) {
 					if (allskill.getId() == tempskill.getId()){
@@ -200,6 +216,26 @@ public class MitarbeiterView implements Serializable {
 		}
 	}
 	
+	/**
+	 * ist nötig, damit das mit dem anzeigen der Skilllisten funktioniert
+	 * das Problem ist, das der SkillConverter den Vergleich der Objektids
+	 *vornimmt und es somit vorkommen kann, dass er bereits gespeicherte Skills beim Mitarbeiter
+	 * in der SelectCheckbox nicht anzeigt.
+	 * 
+	 * Hier nötigt für neuen Mitarbeiter hinzufügen, damit doch alles zurückgesetzt wird
+	 * @return URL für Mitarbeiter hinzufügen
+	 */
+	
+	
+	public String istNeu(){
+		isUsecaseNeuerMitarbeiter = true;
+		return "/views/mitarbeiter/mitarbeiter.xhtml";
+	}
+	
+	public String istUebersicht(){
+		isUsecaseNeuerMitarbeiter = false;
+		return "/views/mitarbeiter/mitarbeiteruebersicht.xhtml";
+	}
 
 	public List<Mitarbeiter> getList() {
 		if(list == null){
@@ -329,6 +365,16 @@ public class MitarbeiterView implements Serializable {
 
 	public void setSkillconverter(SkillConverter skillconverter) {
 		this.skillconverter = skillconverter;
+	}
+
+
+	public boolean isUsecaseNeuerMitarbeiter() {
+		return isUsecaseNeuerMitarbeiter;
+	}
+
+
+	public void setUsecaseNeuerMitarbeiter(boolean isUsecaseNeuerMitarbeiter) {
+		this.isUsecaseNeuerMitarbeiter = isUsecaseNeuerMitarbeiter;
 	}
 
 
