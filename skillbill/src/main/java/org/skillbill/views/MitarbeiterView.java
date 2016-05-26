@@ -275,8 +275,11 @@ public class MitarbeiterView implements Serializable {
 		return somethingList;
 	}
 
-	public GeschlechtEnum[] getGeschlechte() {
-		return GeschlechtEnum.values();
+	public List<GeschlechtEnum> getGeschlechte() {
+		List<GeschlechtEnum> geschlechtlist =
+                new ArrayList<GeschlechtEnum>(EnumSet.allOf(GeschlechtEnum.class));
+		return geschlechtlist;
+	
 	}
 
 
