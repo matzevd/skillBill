@@ -4,6 +4,7 @@ package org.skillbill.views;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -268,8 +269,10 @@ public class MitarbeiterView implements Serializable {
 
 
 
-	public StandortEnum[] getStandorte() {
-		return StandortEnum.values();
+	public List<StandortEnum> getStandorte() {
+		List<StandortEnum> somethingList =
+                new ArrayList<StandortEnum>(EnumSet.allOf(StandortEnum.class));
+		return somethingList;
 	}
 
 	public GeschlechtEnum[] getGeschlechte() {
