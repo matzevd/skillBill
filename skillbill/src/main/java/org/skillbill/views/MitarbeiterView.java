@@ -56,6 +56,7 @@ public class MitarbeiterView implements Serializable {
 	private SkillConverter skillconverter;
 	
 	private boolean isUsecaseNeuerMitarbeiter = false;
+	private boolean neuAufSeite = true;
 	
 
 	private Mitarbeiter mitarbeiter;
@@ -97,7 +98,10 @@ public class MitarbeiterView implements Serializable {
 		}
 		}
 		else {
+			if (neuAufSeite){
 			listSelectedSkills = new ArrayList<Skill>();
+			neuAufSeite = false;
+			}
 		}
 		skillconverter = new SkillConverter(listAllSkills);	
 	}
@@ -230,6 +234,7 @@ public class MitarbeiterView implements Serializable {
 	
 	public String istNeu(){
 		isUsecaseNeuerMitarbeiter = true;
+		neuAufSeite = true;
 		return "/views/mitarbeiter/mitarbeiter.xhtml";
 	}
 	
