@@ -183,7 +183,7 @@ public class MatchView implements Serializable {
 	
 	public String gebeUrl(){
 		reset();
-		return "/views/match/match.xhtml";
+		return "/views/match/match.xhtml?faces-redirect=true";
 		
 	}
 	

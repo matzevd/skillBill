@@ -15,7 +15,7 @@
 				<p:growl id="messages" showDetail="true" life="3000" />
 				<p:dataTable id="objects" var="object"
 					value="#{mitarbeiterView.list}" styleClass="et_datatable"
-					emptyMessage="Keine Mitarbeiter gefunden" editable="true"
+					emptyMessage="Keine Mitarbeiter gefunden" 
 					paginator="true" rows="10"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="5,10,15" selectionMode="single"
@@ -89,8 +89,8 @@
 					<p:outputPanel layout="block" style="text-align:center">
 						<p:commandButton
 							value="Mitarbeiter #{mitarbeiterView.mitarbeiterSelected.vorname} #{mitarbeiterView.mitarbeiterSelected.nachname} löschen! "
-							update=":form1:messages :form1:objects"
-							actionListener="#{mitarbeiterView.delete}"
+							update="@all" process="@this"
+							action="#{mitarbeiterView.delete}"
 							oncomplete="PF('confirmDeleteDlg').hide()">
 
 

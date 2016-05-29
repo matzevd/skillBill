@@ -3,15 +3,14 @@ package org.skillbill.views;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ViewScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Level;
@@ -69,8 +68,11 @@ public class MitarbeiterView implements Serializable {
 	
 	 public void preRenderView() {
 		 //Aufgrund eines Bugs bei Primefaces muss hier so eine Session erzeugt werden
+		 if (neuAufSeite){
 	      HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true );
 	    erzeugeSkillliste();
+	    neuAufSeite = false;
+		 }
 	  
 	   }
 
@@ -139,6 +141,7 @@ public class MitarbeiterView implements Serializable {
 		try {
 		    
 			mitarbeiterService.speichernMitarbeiter(this.mitarbeiter, this.listSelectedSkills);
+			this.listSelectedSkills.clear();
 			
 			notificationSuccess("Mitarbeiter " + this.mitarbeiter.getVorname()+ " " + this.mitarbeiter.getNachname() + " erfolgreich gespeichert!");
 			refreshList();
@@ -162,10 +165,14 @@ public class MitarbeiterView implements Serializable {
 
 	public void delete() {
 		try {
+			list.remove(this.mitarbeiterSelected);
 			mitarbeiterDao.remove(this.mitarbeiterSelected.getId());
 		
 			notificationSuccess("Mitarbeiter " + this.mitarbeiterSelected.getVorname()+ " " + this.mitarbeiterSelected.getNachname() + " erfolgreich gelöscht!");
 			refreshList();
+			
+			 ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+			    ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
 		} catch (Exception e) {
 			notificationError(e,"Mitarbeiter " + this.mitarbeiterSelected.getVorname()+ " " + this.mitarbeiterSelected.getNachname() + "  nicht erfolgreich gelöscht! Fehler: " + e.getMessage());
 		}
@@ -235,12 +242,13 @@ public class MitarbeiterView implements Serializable {
 	public String istNeu(){
 		isUsecaseNeuerMitarbeiter = true;
 		neuAufSeite = true;
-		return "/views/mitarbeiter/mitarbeiter.xhtml";
+		return "/views/mitarbeiter/mitarbeiter.xhtml?faces-redirect=true";
 	}
 	
 	public String istUebersicht(){
 		isUsecaseNeuerMitarbeiter = false;
-		return "/views/mitarbeiter/mitarbeiteruebersicht.xhtml";
+		neuAufSeite = true;
+		return "/views/mitarbeiter/mitarbeiteruebersicht.xhtml?faces-redirect=true";
 	}
 
 	public List<Mitarbeiter> getList() {
