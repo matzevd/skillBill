@@ -22,7 +22,8 @@
 								<f:selectItem itemLabel="Ausschreibung"
 									itemValue="Ausschreibung" />
 								<p:ajax event="change" update="formSuche" />
-								<f:event type="javax.faces.event.PreRenderViewEvent" listener="#{matchView.preRenderView}"/>
+								<f:event type="javax.faces.event.PreRenderViewEvent"
+									listener="#{matchView.preRenderView}" />
 							</p:selectOneRadio>
 						</h:panelGrid>
 					</p:fieldset>
@@ -37,7 +38,7 @@
 								panelStyle="width:250px" converter="#{matchView.skillconverter}">
 								<f:selectItems value="#{matchView.listAllSkills}"
 									itemLabel="#{sk.kurzbezeichnung}" itemValue="#{skill}" var="sk" />
-								<p:ajax event="change" update="formSuche:display"/>
+								<p:ajax event="change" update="formSuche:display" />
 							</p:selectCheckboxMenu>
 
 							<p:outputPanel id="display"
@@ -78,11 +79,12 @@
 					</p:fieldset>
 
 					<h:panelGrid columns="1" style="border:none">
-					<p:commandButton value="Suchen" id="suche" icon="ui-icon-search"
-						action="#{matchView.sucheStarten}" update="@all" />
-						
-						<p:commandButton value="Reset" id="reset" icon="ui-icon-arrowrefresh-1-e"
-						action="#{matchView.reset}" update="@all" style="width:98px"/>
+						<p:commandButton value="Suchen" id="suche" icon="ui-icon-search"
+							action="#{matchView.sucheStarten}" update="@all" />
+
+						<p:commandButton value="Reset" id="reset"
+							icon="ui-icon-arrowrefresh-1-e" action="#{matchView.reset}"
+							update="@all" style="width:98px" />
 					</h:panelGrid>
 
 				</p:panelGrid>
@@ -90,143 +92,264 @@
 
 
 
-  <p:tabView rendered="#{matchView.wurdeGesucht and matchView.suchobjekt == 'Skill'}">
-        <p:tab title="Gefundene Mitarbeiter">
-		
-
-				<p:dataTable id="tblskillMIT" var="zuskill"
-					value="#{matchView.listeGefundenerMitarbeiterZuSkill}"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-					paginator="true" rows="10" style="margin-bottom:20px" paginatorPosition="top"
-					>
-					
-
-					<p:column style="width:20px;">
-						<f:facet name="header">
-							<h:outputText value="Id" />
-						</f:facet>
-						<h:outputText value="#{zuskill.mitarbeiter.id}" />
-					</p:column>
-
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Vorname" />
-						</f:facet>
-						<h:outputText value="#{zuskill.mitarbeiter.vorname}" />
-					</p:column>
-
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Nachname" />
-						</f:facet>
-						<h:outputText value="#{zuskill.mitarbeiter.nachname}" />
-					</p:column>
-
-					<p:column style="width:120px;">
-						<f:facet name="header">
-							<h:outputText value="Personalnummer" />
-						</f:facet>
-						<h:outputText value="#{zuskill.mitarbeiter.personalnummer}" />
-					</p:column>
-
-					<p:column style="width:80px;">
-						<f:facet name="header">
-							<h:outputText value="Trefferquote" />
-						</f:facet>
-						<h:outputText value="#{matchView.gebeNurZweiNachkommastellen(zuskill.matchProzent)}" />
-					</p:column>
+				<p:tabView
+					rendered="#{matchView.wurdeGesucht and matchView.suchobjekt == 'Skill'}">
+					<p:tab title="Gefundene Mitarbeiter">
 
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Trefferskills" />
-						</f:facet>
-						<p:outputPanel id="display"
-							style="width:250px;padding-left:5px;margin-top:10px">
-							<p:dataList value="#{zuskill.listGefundenerSkills}"
-								paginator="true" rows="3" paginatorPosition="top"
-								var="skillSelektierte" emptyMessage="Keine Skills ausgewählt">
+						<p:dataTable id="tblskillMIT" var="zuskill"
+							value="#{matchView.listeGefundenerMitarbeiterZuSkill}"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+							paginator="true" rows="10" style="margin-bottom:20px"
+							paginatorPosition="top">
+
+
+							<p:column style="width:20px;">
+								<f:facet name="header">
+									<h:outputText value="Id" />
+								</f:facet>
+								<h:outputText value="#{zuskill.mitarbeiter.id}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Vorname" />
+								</f:facet>
+								<h:outputText value="#{zuskill.mitarbeiter.vorname}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Nachname" />
+								</f:facet>
+								<h:outputText value="#{zuskill.mitarbeiter.nachname}" />
+							</p:column>
+
+							<p:column style="width:120px;">
+								<f:facet name="header">
+									<h:outputText value="Personalnummer" />
+								</f:facet>
+								<h:outputText value="#{zuskill.mitarbeiter.personalnummer}" />
+							</p:column>
+
+							<p:column style="width:80px;">
+								<f:facet name="header">
+									<h:outputText value="Trefferquote" />
+								</f:facet>
+								<h:outputText
+									value="#{matchView.gebeNurZweiNachkommastellen(zuskill.matchProzent)}" />
+							</p:column>
+
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Trefferskills" />
+								</f:facet>
+								<p:outputPanel id="trefferskills"
+									style="width:250px;padding-left:5px;margin-top:10px">
+									<p:dataList value="#{zuskill.listGefundenerSkills}"
+										paginator="true" rows="3" paginatorPosition="top"
+										var="skillSelektierte" emptyMessage="Keine Skills ausgewählt">
            						 #{skillSelektierte.kurzbezeichnung}
        							 </p:dataList>
-						</p:outputPanel>
-					</p:column>
-				</p:dataTable>
-				</p:tab>
-				
-				<p:tab title="Gefundene Ausschreibungen">
+								</p:outputPanel>
+							</p:column>
+
+							<p:column headerText="Details" style="width:8%">
+								<p:commandLink update=":form2:display"
+									oncomplete="PF('detailsDlg').show()"
+									image="ui-icon ui-icon-search" title="Details">
+									<f:setPropertyActionListener value="#{zuskill}"
+										target="#{matchView.selectedMitarbeiterMatchDTO}" />
+									<h:outputText styleClass="ui-icon ui-icon-search" />
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</p:tab>
+
+					<p:tab title="Gefundene Ausschreibungen">
 						<p:dataTable id="tblskill" var="zuskill"
-					value="#{matchView.listeGefundenerAuschreibungenZuSkill}"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-					paginator="true" rows="10" paginatorPosition="top" style="margin-bottom:20px"
-					rendered="#{matchView.wurdeGesucht and matchView.suchobjekt == 'Skill' and matchView.listeGefundenerAuschreibungenZuSkill.size() != 0}">
-					<f:facet name="header">
+							value="#{matchView.listeGefundenerAuschreibungenZuSkill}"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+							paginator="true" rows="10" paginatorPosition="top"
+							style="margin-bottom:20px"
+							rendered="#{matchView.wurdeGesucht and matchView.suchobjekt == 'Skill' and matchView.listeGefundenerAuschreibungenZuSkill.size() != 0}">
+							<f:facet name="header">
 					Passende Ausschreibungen zum Suchfilter    
 					</f:facet>
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Id" />
-						</f:facet>
-						<h:outputText value="#{zuskill.ausschreibung.id}" />
-					</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Id" />
+								</f:facet>
+								<h:outputText value="#{zuskill.ausschreibung.id}" />
+							</p:column>
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Kurzbezeichnung" />
-						</f:facet>
-						<h:outputText value="#{zuskill.ausschreibung.kurzbezeichnung}" />
-					</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Kurzbezeichnung" />
+								</f:facet>
+								<h:outputText value="#{zuskill.ausschreibung.kurzbezeichnung}" />
+							</p:column>
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Beschreibung" />
-						</f:facet>
-						<h:outputText value="#{zuskill.ausschreibung.beschreibung}" />
-					</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Beschreibung" />
+								</f:facet>
+								<h:outputText value="#{zuskill.ausschreibung.beschreibung}" />
+							</p:column>
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Herausgeber" />
-						</f:facet>
-						<h:outputText value="#{zuskill.ausschreibung.herausgeber}" />
-					</p:column>
-					
-				
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Herausgeber" />
+								</f:facet>
+								<h:outputText value="#{zuskill.ausschreibung.herausgeber}" />
+							</p:column>
 
-					<p:column style="width:80px;">
-						<f:facet name="header">
-							<h:outputText value="Trefferquote" />
-						</f:facet>
-						<h:outputText value="#{zuskill.matchProzent}" />
-					</p:column>
-					
-						<p:column>
-						<f:facet name="header">
-							<h:outputText value="Trefferskills" />
-						</f:facet>
-						<p:outputPanel id="display"
-							style="width:250px;padding-left:5px;margin-top:10px">
-							<p:dataList value="#{zuskill.listGefundenerSkills}"
-								paginator="true" rows="3" paginatorPosition="top"
-								var="skillSelektierte" emptyMessage="Keine Skills ausgewählt">
+
+
+							<p:column style="width:80px;">
+								<f:facet name="header">
+									<h:outputText value="Trefferquote" />
+								</f:facet>
+								<h:outputText value="#{zuskill.matchProzent}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Trefferskills" />
+								</f:facet>
+								<p:outputPanel id="display"
+									style="width:250px;padding-left:5px;margin-top:10px">
+									<p:dataList value="#{zuskill.listGefundenerSkills}"
+										paginator="true" rows="3" paginatorPosition="top"
+										var="skillSelektierte" emptyMessage="Keine Skills ausgewählt">
            						 #{skillSelektierte.kurzbezeichnung}
        							 </p:dataList>
-						</p:outputPanel>
-					</p:column>
-				</p:dataTable>
+								</p:outputPanel>
+							</p:column>
+						</p:dataTable>
 
-				<h:commandLink id="excel" rendered="#{matchView.wurdeGesucht}">
-					<p:graphicImage value="/resources/images/exceldownload.png"
-						style="height:35px" />
-					<p:dataExporter type="xls" target="tblskill"
-						fileName="#{matchView.baueFilename()}"
-						postProcessor="#{matchView.postProcessXLS}" />
-				</h:commandLink>
-				
-				</p:tab>
+						<h:commandLink id="excel" rendered="#{matchView.wurdeGesucht}">
+							<p:graphicImage value="/resources/images/exceldownload.png"
+								style="height:35px" />
+							<p:dataExporter type="xls" target="tblskill"
+								fileName="#{matchView.baueFilename()}"
+								postProcessor="#{matchView.postProcessXLS}" />
+						</h:commandLink>
+
+					</p:tab>
 				</p:tabView>
 
 
+
+
+
+			</h:form>
+
+			<h:form id="form2">
+				<p:dialog
+					header="#{matchView.selectedMitarbeiterMatchDTO.mitarbeiter.vorname} #{matchView.selectedMitarbeiterMatchDTO.mitarbeiter.nachname}"
+					widgetVar="detailsDlg" resizable="false" width="800" height="600"
+					showEffect="clip" hideEffect="clip" appendToBody="true">
+
+					<h:panelGrid id="display" columns="2" cellpadding="4"
+						style="margin:0 auto;">
+
+
+						<h:outputText value="Vorname"
+							style="padding-left: 30px; padding-right: 30px;" />
+
+						<p:inputText
+							value="#{matchView.selectedMitarbeiterMatchDTO.mitarbeiter.vorname}" />
+
+
+
+						<h:outputText value="nachname"
+							style="padding-left: 30px; padding-right: 30px;" />
+						<p:inputText
+							value="#{matchView.selectedMitarbeiterMatchDTO.mitarbeiter.nachname}" />
+
+						<h:outputText value="Personalnummer"
+							style="padding-left: 30px; padding-right: 30px;" />
+
+						<p:inputText
+							value="#{matchView.selectedMitarbeiterMatchDTO.mitarbeiter.personalnummer}" />
+
+
+						<h:outputText value="Geburtsdatum"
+							style="padding-left: 30px; padding-right: 30px;" />
+						<p:calendar
+							value="#{matchView.selectedMitarbeiterMatchDTO.mitarbeiter.geburtsdatum}" />
+
+						<h:outputText value="Email" for="email"
+							style="padding-left: 30px; padding-right: 30px;" />
+
+						<p:inputText id="email"
+							value="#{matchView.selectedMitarbeiterMatchDTO.mitarbeiter.email}"
+							label="Email" />
+
+						<h:outputText for="freiept" value="Freie PT"
+							style="padding-left: 30px; padding-right: 30px; " />
+						<p:spinner id="freiept"
+							value="#{matchView.selectedMitarbeiterMatchDTO.mitarbeiter.freipt}"
+							min="0" max="254" />
+
+						<h:outputText value="Standort" for="standort"
+							style="padding-left: 30px; padding-right: 30px;" />
+
+						<p:selectOneMenu
+							value="#{matchView.selectedMitarbeiterMatchDTO.mitarbeiter.standort}"
+							style="width:173px" id="standort">
+							<f:selectItem itemLabel="Standort" />
+							<f:selectItems var="standort"
+								value="#{matchView.standorte}" itemValue="#{standort}"
+								itemLabel="#{standort}" />
+						</p:selectOneMenu>
+
+						<h:outputText value="Geschlecht" for="geschlecht"
+							style="padding-left: 30px; padding-right: 30px;" />
+
+						<p:selectOneMenu
+							value="#{matchView.selectedMitarbeiterMatchDTO.mitarbeiter.geschlecht}"
+							style="width:173px" id="geschlecht">
+							<f:selectItem itemLabel="Geschlecht" />
+							<f:selectItems var="geschlecht"
+								value="#{matchView.geschlechte}" itemValue="#{geschlecht}"
+								itemLabel="#{geschlecht}" />
+						</p:selectOneMenu>
+
+						<h:outputText value="Telefonnummer"
+							style="padding-left: 30px; padding-right: 30px;" />
+
+						<p:inputText
+							value="#{matchView.selectedMitarbeiterMatchDTO.mitarbeiter.telefonnummer}" />
+
+
+
+						<h:outputText value="Skills"
+							style="padding-left: 30px; padding-right: 30px;" />
+						<p:outputPanel id="skills"
+							style="width:250px;padding-left:5px;margin-top:10px">
+							<p:dataList
+								value="#{matchView.sucheSkillsZuMatchDTOMitarbeiter(matchView.selectedMitarbeiterMatchDTO.mitarbeiter)}"
+								var="skills" emptyMessage="Keine Skills gefunden"
+								paginator="true" rows="5" paginatorPosition="top">
+            				#{skills.kurzbezeichnung}
+       					 </p:dataList>
+						</p:outputPanel>
+
+					</h:panelGrid>
+
+					<p:outputPanel layout="block" style="text-align:center">
+						<br />
+						<br />
+					
+						<p:commandButton value="Zurück" onclick="PF('detailsDlg').hide()"
+							type="button" />
+					</p:outputPanel>
+
+				</p:dialog>
 
 
 

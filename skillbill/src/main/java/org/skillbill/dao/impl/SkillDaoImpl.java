@@ -1,7 +1,6 @@
 package org.skillbill.dao.impl;
 
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -31,6 +30,7 @@ public class SkillDaoImpl extends EntityDaoImpl<Skill> implements SkillDao{
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Skill> findByNames(List<String> skilllist){
 		try {
 			final String queryString = "select sk from  Skill sk where LOWER(sk.kurzbezeichnung) in :value ";

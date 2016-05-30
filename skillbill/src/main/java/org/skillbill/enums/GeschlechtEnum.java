@@ -3,7 +3,7 @@ package org.skillbill.enums;
 public enum GeschlechtEnum {
 	
 	WEIBLICH ("weiblich"),
-	MÄNNLICH ("männlich");
+	MAENNLICH ("maennlich");
 	
 	private final String text;
 

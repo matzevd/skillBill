@@ -2,12 +2,12 @@ package org.skillbill.enums;
 
 public enum StandortEnum {
 	
-	DÜSSELDORF("Düsseldorf"), 
-	MÜNSTER("Münster" ), 
+	DUESSELDORF("Duesseldorf"), 
+	MUENSTER("Muenster" ), 
 	LEVERKUSEN("Leverkusen"), 
 	RATTINGEN("Rattingen"), 
 	DORTMUND( "Dortmund" ), 
-	KÖLN("Köln" ), 
+	KOELN("Koeln" ), 
 	HAMBURG(  "Hamburg"),
 	BERLIN ("Berlin");
 

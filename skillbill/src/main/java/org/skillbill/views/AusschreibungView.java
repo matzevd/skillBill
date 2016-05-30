@@ -68,7 +68,8 @@ public class AusschreibungView implements Serializable {
 	
 	 public void preRenderView() {
 		 //Aufgrund eines Bugs bei Primefaces muss hier so eine Session erzeugt werden
-	      HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true );
+	      @SuppressWarnings("unused")
+		HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true );
 	    erzeugeSkillliste();
 	  
 	   }

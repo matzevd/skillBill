@@ -3,7 +3,6 @@ package org.skillbill.dao;
 import java.util.List;
 
 import org.skillbill.common.AusschreibungSkill;
-import org.skillbill.common.MitarbeiterSkill;
 
 
 

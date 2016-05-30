@@ -69,7 +69,8 @@ public class MitarbeiterView implements Serializable {
 	 public void preRenderView() {
 		 //Aufgrund eines Bugs bei Primefaces muss hier so eine Session erzeugt werden
 		 if (neuAufSeite){
-	      HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true );
+	      @SuppressWarnings("unused")
+		HttpSession session = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true );
 	    erzeugeSkillliste();
 	    neuAufSeite = false;
 		 }

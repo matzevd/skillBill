@@ -1,7 +1,6 @@
 
 package org.skillbill.common;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +25,9 @@ public class MatchDTO {
 	}
 
 	public Mitarbeiter getMitarbeiter() {
+		if (mitarbeiter == null){
+			mitarbeiter = new Mitarbeiter();
+		}
 		return mitarbeiter;
 	}
 
@@ -34,7 +36,6 @@ public class MatchDTO {
 	}
 
 	public Double getMatchProzent() {
-		DecimalFormat f = new DecimalFormat("#0.00"); 
 		return matchProzent;
 	}
 
