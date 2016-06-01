@@ -10,7 +10,13 @@ import org.skillbill.common.MitarbeiterSkill;
 import org.skillbill.dao.MitarbeiterSkillDao;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
+/**
+ * Implementierungsklasse für das Interface MitarbeiterSkillDao
+ * Hier werden die spezifischen Methoden für das Dao implementiert
+ * @author Matthias van Dijk
+ *
+ *Alle Methoden dieser Klasse werden in einer Transaktion ausgeführt.
+ */
 @Component
 @Transactional
 public class MitarbeiterSkillDaoImpl extends EntityDaoImpl<MitarbeiterSkill> implements MitarbeiterSkillDao {

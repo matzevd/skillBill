@@ -11,7 +11,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 
-
+/**
+ * Klasse der Entität Skill
+ * @author Matthias van Dijk
+ *
+ */
 
 @Entity
 @NamedQueries({

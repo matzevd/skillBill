@@ -8,7 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-
+/**
+ * Klasse der Entität Ausschreibung
+ * @author Matthias van Dijk
+ *
+ */
 
 @Entity
 @NamedQueries({

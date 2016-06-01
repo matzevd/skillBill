@@ -13,7 +13,11 @@ import org.skillbill.enums.GeschlechtEnum;
 import org.skillbill.enums.StandortEnum;
 
 
-
+/**
+ * Klasse der Entität Mitarbeiter
+ * @author Matthias van Dijk
+ *
+ */
 @Entity
 @NamedQueries({
     @NamedQuery(name="mitarbeiter.findAll", query="select m from Mitarbeiter m"),

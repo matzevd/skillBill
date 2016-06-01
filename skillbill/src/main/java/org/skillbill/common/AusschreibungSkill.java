@@ -7,7 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-
+/**
+ * Klasse der Entität AusschreibungSkill.
+ * Dieses ist eine Klasse, um die m zu n Beziehung zwischen Skill und Ausschreibung abzubilden
+ * @author Matthias van Dijk
+ *
+ */
 @Entity
 @NamedQueries({
     @NamedQuery(name="ausschreibungskill.findAll", query="select ask from AusschreibungSkill ask"),

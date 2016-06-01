@@ -14,7 +14,13 @@ import org.hibernate.HibernateException;
 import org.skillbill.dao.EntityDao;
 import org.springframework.transaction.annotation.Transactional;
 
-
+/**
+ * Implementierungsklasse für das Interface EntityDao
+ * Hier werden die spezifischen Methoden für das Dao implementiert
+ * @author Matthias van Dijk
+ *
+ *Alle Methoden dieser Klasse werden in einer Transaktion ausgeführt.
+ */
 public class EntityDaoImpl<E>  implements EntityDao<E> {
 
 	

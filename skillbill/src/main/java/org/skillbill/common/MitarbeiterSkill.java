@@ -7,7 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-
+/**
+ * Klasse der Entität MitarbeiterSkill
+ * Diese Klasse dient der Abbildung der m zu n Beziehung zwischen Skill und Mitarbeiter
+ * @author Matthias van Dijk
+ *
+ */
 @Entity
 @NamedQueries({
     @NamedQuery(name="mitarbeiterskill.findAll", query="select ms from MitarbeiterSkill ms"),

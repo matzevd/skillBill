@@ -13,6 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
+/**
+ * Implementierungsklasse für das Interface SkillDao
+ * Hier werden die spezifischen Methoden für das Dao implementiert
+ * @author Matthias van Dijk
+ *
+ *Alle Methoden dieser Klasse werden in einer Transaktion ausgeführt.
+ */
 public class SkillDaoImpl extends EntityDaoImpl<Skill> implements SkillDao{
 
 

@@ -3,7 +3,11 @@ package org.skillbill.dao;
 import java.util.List;
 
 
-
+/**
+ * Interface für das EntityDao
+ * @author Matthias van Dijk
+ *
+ */
 public interface EntityDao<E> {
 	
 	E persist(E e) throws Exception;

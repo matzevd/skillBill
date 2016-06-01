@@ -13,6 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
+/**
+ * Implementierungsklasse für das Interface MitarbeiterDao
+ * Hier werden die spezifischen Methoden für das Dao implementiert
+ * @author Matthias van Dijk
+ *
+ *Alle Methoden dieser Klasse werden in einer Transaktion ausgeführt.
+ */
 public class MitarbeiterDaoImpl extends EntityDaoImpl<Mitarbeiter> implements MitarbeiterDao {
 	
 	@SuppressWarnings("unchecked")

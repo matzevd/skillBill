@@ -10,7 +10,13 @@ import org.skillbill.dao.AusschreibungDao;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-
+/**
+ * Implementierungsklasse für das Interface AusschreibungsDao
+ * Hier werden die spezifischen Methoden für das Dao implementiert
+ * @author Matthias van Dijk
+ *
+ *Alle Methoden dieser Klasse werden in einer Transaktion ausgeführt.
+ */
 @Component
 @Transactional
 public class AusschreibungDaoImpl extends EntityDaoImpl<Ausschreibung> implements AusschreibungDao {

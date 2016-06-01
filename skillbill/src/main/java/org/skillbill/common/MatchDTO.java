@@ -4,6 +4,11 @@ package org.skillbill.common;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Diese Klasse dient dazu, Daten als Container vorzuhalten, um diese gebündelt auf der Oberflächen anzeigen zu können
+ * @author Matthias van Dijk
+ *
+ */
 public class MatchDTO {
 
 

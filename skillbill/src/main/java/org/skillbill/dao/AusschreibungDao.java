@@ -6,7 +6,12 @@ import org.skillbill.common.Ausschreibung;
 
 
 
-
+/**
+ * Interface für das Ausschreibungsdao
+ * Erweitert das EntityDao
+ * @author Matthias van Dijk
+ *
+ */
 public interface AusschreibungDao extends EntityDao<Ausschreibung> {
 	
 	public List<Ausschreibung> findeAusschreibungMitSkillname(String skillname);

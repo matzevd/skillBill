@@ -12,12 +12,17 @@ import javax.faces.convert.FacesConverter;
 
 import org.skillbill.common.Skill;
 
+/**
+ * Dieses ist eine Converterklasse, um die Kommunikation zwischen Controller und View zu vereinfachen.
+ * Von der Oberflächen können nur einfache Datentypen zurückgegeben werden, nicht aber selbstgebaute Objekt(Entitäten)
+ * Dieser Converter sorgt dafür, dass der Controller doch mit den Objekten arbeiten kann
+ * @author Matthias van Dijk
+ *
+ */
 @FacesConverter("skillConverter")
 public class SkillConverter implements Converter, Serializable {
 
-	/**
-		 * 
-		 */
+	
 	private static final long serialVersionUID = -611510298538182721L;
 
 	public SkillConverter(List<Skill> skills) {

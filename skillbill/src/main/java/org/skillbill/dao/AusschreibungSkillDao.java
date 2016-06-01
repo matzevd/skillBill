@@ -5,7 +5,12 @@ import java.util.List;
 import org.skillbill.common.AusschreibungSkill;
 
 
-
+/**
+ * Interface für das AusschreibungSkillDao
+ * Erweitert das EntityDao
+ * @author Matthias van Dijk
+ *
+ */
 public interface AusschreibungSkillDao extends EntityDao<AusschreibungSkill> {
 	
 	public List<AusschreibungSkill> findByAusschreibungID(final long ausschreibungID);

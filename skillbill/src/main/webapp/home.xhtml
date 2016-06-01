@@ -11,25 +11,27 @@
 	<ui:composition template="/WEB-INF/tags/layout.xhtml">
 		<ui:define name="content">
 
+			<p:fieldset legend="Willkommen bei SkillBill" toggleable="false"
+				toggleSpeed="500">
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:graphicImage value="/resources/images/skillbill.png"
+						style="height:100px" />
 
-			
-			
-					
-	<p:fieldset legend="Willkommen bei SkillBill" toggleable="false" toggleSpeed="500">
-					<h:panelGrid columns="2" cellpadding="5">
-					<p:graphicImage value="/resources/images/skillbill.png" style="height:100px"/>
-					
-					<h:outputText value="Test"></h:outputText>
-					</h:panelGrid>	
-				</p:fieldset>
-				
-			
-   
+					<h:outputText
+						value="Ihr Skillmatching-Tool für eine einfache, effizente und effektive Aquisetätigkeit!"></h:outputText>
+				</h:panelGrid>
+				<h:panelGrid columns="1">
+					<h:outputText
+						value="- SkillBill ist ein unternehmensweit einsetzbares Tool für Erfassung und Management von Mitarbeiterkompetenzen." />
+					<h:outputText
+						value="- Es erkennt ungenutze Potentiale und erleichtert durch das integrierte Ressourcenmanagement-System die Zuordnung er richtigen Mitarbeiter zum richtigen Projekt." />
+					<h:outputText
+						value="- Es steigert die Effizienz während der Projektakquise und sichert langfristig Marktvorteile."></h:outputText>
+				</h:panelGrid>
+			</p:fieldset>
 
 		</ui:define>
 	</ui:composition>
-
-
 
 </h:body>
 </html>
