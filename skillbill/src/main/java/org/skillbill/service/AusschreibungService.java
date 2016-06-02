@@ -36,6 +36,13 @@ public class AusschreibungService {
 	private SkillDao skilldao;
 	
 	
+	/**
+	 * Diese Methode speichert die erstellte Ausschreibung auf der Oberfläche bzw. gibt die Daten an das Dao weiter
+	 * Weiterhin werden die Skills zu dieser Ausschreibung gespeichert
+	 * @param ausschreibung
+	 * @param listSkill
+	 * @throws Exception
+	 */
 	@Transactional
 	public void speichernAusschreibung(Ausschreibung ausschreibung, List<Skill> listSkill) throws Exception{
 		
@@ -57,7 +64,13 @@ public class AusschreibungService {
 
 
 
-
+/**
+ * Diese Methode ermittelt zu einer Ausschreibung anhand der AusschreibungID die dazugehörigen Skills
+ * @param ausschreibungID
+ * @return gibt eine Liste mit Skill-Objektenzurück
+ * @throws Exception
+ */
+	@Transactional
 	public List<Skill> sucheSkillsZuAusschreibung(Long ausschreibungID) throws Exception {
 		List<Skill>	skillsVonAusschreibung = new ArrayList<Skill>(); 
 		

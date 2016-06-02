@@ -52,6 +52,11 @@ public class MatchService {
 
 	}
 
+	/**
+	 * Diese Methode sucht anhand der Angabe eines Skills Ausschreibungen, in der dieser Skill gefordert wird.
+	 * @param skillname
+	 * @return gibt eine Liste mit Ausschreibungen zurück
+	 */
 	public List<Ausschreibung> sucheAusschreibungMatchesZuSkill(String skillname) {
 
 		List<Ausschreibung> listAusschreibungen = ausschreibungDao
@@ -60,6 +65,12 @@ public class MatchService {
 
 	}
 
+	/**
+	 * Die Methode sucht anhand einer Skillliste Mitarbeiter, die Skills dieser Liste besitzen.
+	 * Weiterhin werden die Trefferquote des Mitarbeiters der geforderten Skills ermittelt
+	 * @param skilliste
+	 * @return liefert eine Liste mit MatchDTO-Objekten zurück
+	 */
 	public List<MatchDTO> sucheMitarbeiterMatchesZuSkills(
 			List<Skill> skilliste) {
 		List<Mitarbeiter> listMitarbeiterZuSkill = new ArrayList<Mitarbeiter>();
@@ -77,7 +88,11 @@ public class MatchService {
 		 
 
 	}
-	
+	/**
+	 * sucht anhand von einer Skillliste Ausschreibungen, die Skills dieser Liste fordern und berechnet die Trefferquote für die Ausschreibung
+	 * @param skilliste
+	 * @return liefert eine Liste mit MatchDTO-Objekten zurück
+	 */
 	public List<MatchDTO> sucheAusschreibungMatchesZuSkills(
 			List<Skill> skilliste) {
 		List<Ausschreibung> listAusschreibungZuSkill = new ArrayList<Ausschreibung>();
@@ -95,6 +110,14 @@ public class MatchService {
 
 	}
 
+	/**
+	 * Diese Methode bereit die Match-DTO Liste für die Oberflächenanzeigen vor
+	 * Dabei werden u.a. die Trefferprozente des Mitarbeiter berechnet
+	 * @param listMitarbeiterZuSkill
+	 * @param listeSkillids
+	 * @param skilliste
+	 * @return liefert eine Liste mit Match-DTO Objekten zurück
+	 */
 	private 	List<MatchDTO>  erzeugeOberflaecheDatenSucheMitarbeiterVonSkill(
 			List<Mitarbeiter> listMitarbeiterZuSkill, List<Long> listeSkillids, List<Skill> skilliste) {
 		List<MatchDTO> listMatch = new ArrayList<MatchDTO>();
@@ -122,7 +145,14 @@ public class MatchService {
 		return listMatch;
 	}
 	
-	
+	/**
+	 * Diese Methode bereitet eine Liste mit Match-DTOs vor, um die Daten auf der Oberfläche anzeigen zu können.
+	 * Ferner wird unteranderem auch der Prozentsatz der getroffenen Skills ermittelt
+	 * @param listAusschreibungZuSkill
+	 * @param listeSkillids
+	 * @param skilliste
+	 * @return
+	 */
 	private 	List<MatchDTO>  erzeugeOberflaecheDatenSucheAusschreibungVonSkill(
 			List<Ausschreibung> listAusschreibungZuSkill, List<Long> listeSkillids, List<Skill> skilliste) {
 		List<MatchDTO> listMatch = new ArrayList<MatchDTO>();

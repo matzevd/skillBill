@@ -34,6 +34,13 @@ public class MitarbeiterService {
 	private SkillDao skilldao;
 
 	@Transactional
+	/**
+	 * diese Methode übergibt die Daten eines neuen Mitarbeiters an das Dao und
+	 * speichert auch ferner mit dem MitarbeiterskillDao die Mitarbeiterskills
+	 * @param mitarbeiter
+	 * @param listSkill
+	 * @throws Exception
+	 */
 	public void speichernMitarbeiter(Mitarbeiter mitarbeiter,
 			List<Skill> listSkill) throws Exception {
 
@@ -70,6 +77,12 @@ public class MitarbeiterService {
 		this.mitarbeiterskilldao = mitarbeiterskilldao;
 	}
 
+	/**
+	 * sucht die Skills eines Mitarbeiters anhand mitarbeiterid
+	 * @param mitarbeiterid
+	 * @return Liste mit Skills
+	 * @throws Exception
+	 */
 	public List<Skill> sucheSkillsZuMitarbeiter(Long mitarbeiterid)
 			throws Exception {
 		List<Skill> skillsVonMitarbeiter = new ArrayList<Skill>();
@@ -86,12 +99,20 @@ public class MitarbeiterService {
 	}
 
 	@Transactional
+	/**
+	 * diese Methode dient den Update eines bestehenden Mitarbeiters
+	 * @param mitarbeiterSelected
+	 * @param listSelectedSkills
+	 * @throws Exception
+	 */
 	public void updateMitarbeiter(Mitarbeiter mitarbeiterSelected,
 			List<Skill> listSelectedSkills) throws Exception {
 
 		mitarbeiterdao.merge(mitarbeiterSelected);
 		List<MitarbeiterSkill> listaktuelleSkills = mitarbeiterskilldao
 				.findByMitarbeiterId(mitarbeiterSelected.getId());
+		
+		//es folgt der Vergleich, ob neue Skills hinzu gekommen sind oder bestehende gelöscht wurden
 		List<Skill> listFehltNochInDB = ermittleFehlendeSkills(listSelectedSkills, listaktuelleSkills);
 		List<MitarbeiterSkill> listZuLoeschen = ermittleZuLoeschendeSkills(listSelectedSkills, listaktuelleSkills);
 
@@ -108,7 +129,12 @@ public class MitarbeiterService {
 		}
 
 	}
-
+/**
+ * ermittelt anhand der aktuell ausgewählten Skillliste in der Oberfläche, welche Skills noch nicht in der Datenbank vorhanden sind
+ * @param listSelectedSkills
+ * @param listaktuelleSkills
+ * @return liefert eine Liste mit Skills zurück
+ */
 	private List<Skill> ermittleFehlendeSkills(List<Skill> listSelectedSkills,
 			List<MitarbeiterSkill> listaktuelleSkills) {
 		List<Skill> listFehltNochInDB = new ArrayList<Skill>();
@@ -130,7 +156,12 @@ public class MitarbeiterService {
 		return listFehltNochInDB;
 	}
 	
-	
+	/**
+	 * ermittelt anhand der Oberflächeneingabe bei Mitarbeiter bearbeiten, welche Skills gelöscht werden müssen
+	 * @param listSelectedSkills
+	 * @param listaktuelleSkills
+	 * @return liefert eine Liste an MitarbeiterSkills zurück
+	 */
 	private List<MitarbeiterSkill> ermittleZuLoeschendeSkills(List<Skill> listSelectedSkills,
 			List<MitarbeiterSkill> listaktuelleSkills) {
 		List<MitarbeiterSkill> listZuLoeschende = new ArrayList<MitarbeiterSkill>();
