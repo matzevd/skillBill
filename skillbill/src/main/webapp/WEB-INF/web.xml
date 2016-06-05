@@ -12,7 +12,7 @@
     <!-- Prime FACES -->
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>home</param-value>
+		<param-value>sam</param-value>
 	</context-param>
     <context-param>
 		<param-name>contextConfigLocation</param-name>
