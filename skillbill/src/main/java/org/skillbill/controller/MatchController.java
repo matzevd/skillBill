@@ -1,4 +1,4 @@
-package org.skillbill.views;
+package org.skillbill.controller;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -37,7 +37,7 @@ import org.springframework.stereotype.Component;
 
 @Component(value = "matchView")
 @ViewScoped
-public class MatchView implements Serializable {
+public class MatchController implements Serializable {
 
 	/**
 	 * 

@@ -1,4 +1,4 @@
-package org.skillbill.views;
+package org.skillbill.controller;
 
 
 import java.io.Serializable;
@@ -33,7 +33,7 @@ import org.springframework.stereotype.Component;
 
 @Component(value="mitarbeiterView")
 @Scope(value="session")
-public class MitarbeiterView implements Serializable {
+public class MitarbeiterController implements Serializable {
 	
 	
 

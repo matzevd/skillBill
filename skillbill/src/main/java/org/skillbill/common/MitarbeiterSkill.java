@@ -13,10 +13,8 @@ import javax.persistence.NamedQuery;
  * @author Matthias van Dijk
  *
  */
-@Entity
-@NamedQueries({
-    @NamedQuery(name="mitarbeiterskill.findAll", query="select ms from MitarbeiterSkill ms"),
-}) 
+@org.hibernate.annotations.Entity
+
 public class MitarbeiterSkill {
 	
 	@Id

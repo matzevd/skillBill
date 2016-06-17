@@ -1,4 +1,4 @@
-package org.skillbill.views;
+package org.skillbill.controller;
 
 
 import java.io.Serializable;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 
 @Component(value="skillView")
 @Scope(value="session")
-public class SkillView implements Serializable {
+public class SkillController implements Serializable {
 	
 	
 

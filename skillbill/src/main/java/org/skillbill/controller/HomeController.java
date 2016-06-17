@@ -1,4 +1,4 @@
-package org.skillbill.views;
+package org.skillbill.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import org.primefaces.model.tagcloud.TagCloudItem;
 
 @Component(value="homeView")
 @Scope(value="session")
-public class HomeView implements Serializable{
+public class HomeController implements Serializable{
 
 	/**
 	 * 

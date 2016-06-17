@@ -1,4 +1,4 @@
-package org.skillbill.views;
+package org.skillbill.controller;
 
 
 import java.io.Serializable;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 
 @Component(value="ausschreibungView")
 @ViewScoped
-public class AusschreibungView implements Serializable {
+public class AusschreibungController implements Serializable {
 	
 
 
@@ -208,18 +208,6 @@ public class AusschreibungView implements Serializable {
 
 	public void setListSelected(List<Ausschreibung> listSelected) {
 		this.listSelected = listSelected;
-	}
-
-
-
-	public AusschreibungDao getAusschreibungDao() {
-		return ausschreibungDao;
-	}
-
-
-
-	public void setAusschreibungDao(AusschreibungDao ausschreibungDao) {
-		this.ausschreibungDao = ausschreibungDao;
 	}
 
 
